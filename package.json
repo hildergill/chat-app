@@ -1,0 +1,10 @@
+{
+	"name": "chat-app",
+	"displayName": "Chat App",
+	"author": {
+		"name": "Hilder Gill",
+		"email": "hildergill@gmail.com",
+		"url": "https://www.github.com/hildergill"
+	},
+	"repository": "https://www.github.com/hildergill/simple-chat-app"
+}
