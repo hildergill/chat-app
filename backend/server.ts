@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, Request, Response, json, urlencoded } from "express";
 import { Server as HttpServer, createServer as createHttpServer } from "http";
 import next from "next";
 
@@ -13,6 +13,10 @@ const expressServer: Express = express(),
 const requestHandler = nextServer.getRequestHandler();
 
 nextServer.prepare().then(() => {
+	expressServer.use(json(), urlencoded({ extended: false }));
+
+	// TODO Add something here later
+
 	expressServer.all("*", (request: Request, response: Response) => {
 		return requestHandler(request, response);
 	});
