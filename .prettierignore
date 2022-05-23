@@ -1,3 +1,5 @@
 .next/
 
 backend/**/*.js
+helpers/**/*.js
+models/**/*.js
