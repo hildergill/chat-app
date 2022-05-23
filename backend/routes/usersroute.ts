@@ -4,6 +4,11 @@ import { CreateUserValidators } from "../../validators/uservalidators";
 import { validationErrorToArray } from "../../helpers/error";
 import { Connection } from "mysql";
 import { createDatabaseConnection } from "../../helpers/database";
+import User from "../../models/user";
+import { createUser } from "../../helpers/user";
+import UserToken from "../../models/usertoken";
+import { createUserToken } from "../../helpers/usertoken";
+import { getCookieOptions, getUserTokenCookieName } from "../../helpers/cookie";
 
 const validationOptions: ValidationOptions = { abortEarly: false };
 
@@ -23,9 +28,10 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 	const databaseConnection: Connection = createDatabaseConnection();
 
 	try {
-		// TODO Add something here later
+		const createdUser: User = await createUser(databaseConnection, value),
+			createdUserToken: UserToken = await createUserToken(databaseConnection, createdUser.id);
 
-		return response.status(200).end();
+		return response.status(201).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
 		// TODO Add something here later
 

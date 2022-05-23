@@ -6,6 +6,7 @@ nodemon({
 	env: {
 		NODE_ENV: "development",
 
+		BACKEND_SECRET: "chat_app",
 		BACKEND_PORT: 3000
 	}
 });
