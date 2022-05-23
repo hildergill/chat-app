@@ -18,7 +18,7 @@ export const createUser = (databaseConnection: Connection, params: CreateUserPar
 		});
 	});
 
-export const fetchUser = (databaseConnection: Connection, displayName: String): Promise<User> =>
+export const fetchUserByDisplayName = (databaseConnection: Connection, displayName: String): Promise<User> =>
 	new Promise<User>((resolve, reject) => {
 		const queryString: string = "select * from users where display_name = ?";
 
