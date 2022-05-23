@@ -70,9 +70,13 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 	} catch (error) {
 		console.log(error);
 
-		// TODO Add something here later
-
-		return response.status(500).end();
+		if (error === 0) {
+			const error: Error = { errorKey: "errors:inputs.displayName.notExist" };
+			return response.status(401).json(error);
+		} else {
+			const error: Error = { errorKey: "errors:serverError" };
+			return response.status(500).json(error);
+		}
 	} finally {
 		databaseConnection.end();
 	}
