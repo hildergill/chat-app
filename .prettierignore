@@ -3,3 +3,4 @@
 backend/**/*.js
 helpers/**/*.js
 models/**/*.js
+validators/**/*.js
