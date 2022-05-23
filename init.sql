@@ -9,4 +9,12 @@ create table `chat_app`.`users` (
     unique key (`display_name`)
 );
 
+create table `chat_app`.`user_tokens` (
+    `token` varchar(512) not null,
+    `user` char(36) not null,
+
+    primary key (`token`),
+    foreign key (`user`) references `chat_app`.`users` (`id`)
+);
+
 -- TODO Add something here later
