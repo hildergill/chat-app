@@ -1,0 +1,15 @@
+{
+	"serverError": "Internal server error.",
+	"inputs": {
+		"displayName": {
+			"max": "Your display name must not be longer than {{length}} characters long"
+		},
+		"password": {
+			"min": "Your password must not be shorter than {{length}} characters long"
+		},
+		"confirmPassword": {
+			"mismatch": "Password and confirm password must be the same"
+		},
+		"required": "All required fields must not be empty"
+	}
+}
