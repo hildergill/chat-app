@@ -1,8 +1,10 @@
 {
-	"serverError": "Internal server error.",
+	"serverError": "Internal server error",
 	"inputs": {
 		"displayName": {
-			"max": "Your display name must not be longer than {{length}} characters long"
+			"max": "Your display name must not be longer than {{length}} characters long",
+			"taken": "Display name taken",
+			"notExist": "The user with associated display name does not exists"
 		},
 		"password": {
 			"min": "Your password must not be shorter than {{length}} characters long"
