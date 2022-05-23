@@ -1,6 +1,6 @@
-type UserToken={
-    token:string;
-    user:string;
-}
+type UserToken = {
+	token: string;
+	user: string;
+};
 
 export default UserToken;
