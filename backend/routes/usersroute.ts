@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import Joi, { ValidationOptions } from "joi";
 import { LogInValidator, SignUpValidator } from "../../validators/uservalidators";
 import { validationErrorToArray } from "../../helpers/error";
-import { Connection } from "mysql";
+import { Connection, MysqlError } from "mysql";
 import { createDatabaseConnection } from "../../helpers/database";
 import User from "../../models/user";
 import { createUser, fetchUserByDisplayName } from "../../helpers/user";
@@ -10,6 +10,7 @@ import UserToken from "../../models/usertoken";
 import { createUserToken } from "../../helpers/usertoken";
 import { getCookieOptions, getUserTokenCookieName } from "../../helpers/cookie";
 import { compare } from "bcrypt";
+import Error from "../../models/error";
 
 const validationOptions: ValidationOptions = { abortEarly: false };
 
@@ -41,9 +42,13 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 	} catch (error) {
 		console.log(error);
 
-		// TODO Add something here later
-
-		return response.status(500).end();
+		if ((error as MysqlError).errno === 1062) {
+			const error: Error = { errorKey: "errors:inputs.displayName.taken" };
+			return response.status(401).json(error);
+		} else {
+			const error: Error = { errorKey: "errors:serverError" };
+			return response.status(500).json(error);
+		}
 	} finally {
 		databaseConnection.end();
 	}
