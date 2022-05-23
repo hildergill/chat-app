@@ -1,7 +1,8 @@
 import Joi from "joi";
+import Error from "../models/error";
 
-export const validationErrorToArray = (errors: Joi.ValidationError): string[] => {
+export const convertValidationError = (errors: Joi.ValidationError): Error[] => {
 	return errors.details.map((item: Joi.ValidationErrorItem) => {
-		return item.message;
+		return { errorKey: item.message };
 	});
 };

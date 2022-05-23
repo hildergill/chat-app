@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import Joi, { ValidationOptions } from "joi";
 import { LogInValidator, SignUpValidator } from "../../validators/uservalidators";
-import { validationErrorToArray } from "../../helpers/error";
+import { convertValidationError } from "../../helpers/error";
 import { Connection, MysqlError } from "mysql";
 import { createDatabaseConnection } from "../../helpers/database";
 import User from "../../models/user";
@@ -30,7 +30,7 @@ export default UsersRoute;
 
 UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 	const { value, error }: Joi.ValidationResult<SignUpBody> = SignUpValidator.validate(request.body, validationOptions);
-	if (error) return response.status(400).json(validationErrorToArray(error));
+	if (error) return response.status(400).json(convertValidationError(error));
 
 	const databaseConnection: Connection = createDatabaseConnection();
 
@@ -43,11 +43,11 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 		console.log(error);
 
 		if ((error as MysqlError).errno === 1062) {
-			const error: Error = { errorKey: "errors:inputs.displayName.taken" };
-			return response.status(401).json(error);
+			const errors: Error[] = [{ errorKey: "errors:inputs.displayName.taken" }];
+			return response.status(401).json(errors);
 		} else {
-			const error: Error = { errorKey: "errors:serverError" };
-			return response.status(500).json(error);
+			const errors: Error[] = [{ errorKey: "errors:serverError" }];
+			return response.status(500).json(errors);
 		}
 	} finally {
 		databaseConnection.end();
@@ -56,7 +56,7 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 
 UsersRoute.post("/login/", async (request: Request, response: Response) => {
 	const { value, error }: Joi.ValidationResult<LogInBody> = LogInValidator.validate(request.body, validationOptions);
-	if (error) return response.status(400).json(validationErrorToArray(error));
+	if (error) return response.status(400).json(convertValidationError(error));
 
 	const databaseConnection: Connection = createDatabaseConnection();
 
@@ -71,11 +71,11 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 		console.log(error);
 
 		if (error === 0) {
-			const error: Error = { errorKey: "errors:inputs.displayName.notExist" };
-			return response.status(401).json(error);
+			const errors: Error[] = [{ errorKey: "errors:inputs.displayName.notExist" }];
+			return response.status(401).json(errors);
 		} else {
-			const error: Error = { errorKey: "errors:serverError" };
-			return response.status(500).json(error);
+			const errors: Error[] = [{ errorKey: "errors:serverError" }];
+			return response.status(500).json(errors);
 		}
 	} finally {
 		databaseConnection.end();
