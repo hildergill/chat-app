@@ -7,6 +7,10 @@ nodemon({
 		NODE_ENV: "development",
 
 		BACKEND_SECRET: "chat_app",
-		BACKEND_PORT: 3000
+		BACKEND_PORT: 3000,
+
+		DATABASE_HOSTNAME: "localhost",
+		DATABASE_USERNAME: "chat_app",
+		DATABASE_PASSWORD: "123456"
 	}
 });

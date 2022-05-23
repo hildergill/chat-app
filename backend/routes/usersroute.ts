@@ -33,6 +33,8 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 
 		return response.status(201).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
+		console.log(error);
+
 		// TODO Add something here later
 
 		return response.status(500).end();
