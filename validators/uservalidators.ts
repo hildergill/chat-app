@@ -11,9 +11,8 @@ export const SignUpValidator = Joi.object<SignUpBody, true, SignUpBody>({
 	password: Joi.string().required().min(PasswordMinLength).messages({
 		"string.min": "errors:inputs.password.min"
 	}),
-	confirmPassword: Joi.string().required().min(PasswordMinLength).valid(Joi.ref("password")).messages({
-		"string.min": "errors:inputs.password.min",
-		"object.valid": "errors:confirmPassword.mismatch"
+	confirmPassword: Joi.string().required().valid(Joi.ref("password")).messages({
+		"any.only": "errors:confirmPassword.mismatch"
 	})
 }).messages({
 	"any.required": "errors:inputs.required"
