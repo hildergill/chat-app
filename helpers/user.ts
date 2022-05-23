@@ -11,12 +11,13 @@ export type CreateUserParams = {
 export const createUser = (databaseConnection: Connection, params: CreateUserParams): Promise<User> =>
 	new Promise<User>(async (resolve, reject) => {
 		const id: string = v4(),
-		password:string = await hash(params.password,12), { displayName }=params,
+			password: string = await hash(params.password, 12),
+			{ displayName } = params,
 			queryString: string = "insert users values (?, ?, ?)";
 
 		databaseConnection.query(queryString, [id, displayName, password], (error) => {
 			if (error) return reject(error);
-			return resolve({ id, displayName ,password});
+			return resolve({ id, displayName, password });
 		});
 	});
 
