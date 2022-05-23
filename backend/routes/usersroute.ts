@@ -5,10 +5,11 @@ import { validationErrorToArray } from "../../helpers/error";
 import { Connection } from "mysql";
 import { createDatabaseConnection } from "../../helpers/database";
 import User from "../../models/user";
-import { createUser } from "../../helpers/user";
+import { createUser, fetchUserByDisplayName } from "../../helpers/user";
 import UserToken from "../../models/usertoken";
 import { createUserToken } from "../../helpers/usertoken";
 import { getCookieOptions, getUserTokenCookieName } from "../../helpers/cookie";
+import { compare } from "bcrypt";
 
 const validationOptions: ValidationOptions = { abortEarly: false };
 
@@ -55,13 +56,12 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 	const databaseConnection: Connection = createDatabaseConnection();
 
 	try {
-		/* 		const createdUser: User = await createUser(databaseConnection, value),
-			createdUserToken: UserToken = await createUserToken(databaseConnection, createdUser.id);
+		const fetchedUser: User = await fetchUserByDisplayName(databaseConnection, value.displayName);
 
-		return response.status(201).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
- */
+		if (!(await compare(value.password, fetchedUser.password))) return response.status(401).end();
 
-		return response.status(200).end();
+		const createdUserToken: UserToken = await createUserToken(databaseConnection, fetchedUser.id);
+		return response.status(200).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
 		console.log(error);
 
