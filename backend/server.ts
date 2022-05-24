@@ -1,10 +1,10 @@
-import express, { Express, Request, Response, json, urlencoded } from "express";
+/* import express, { Express, Request, Response, json, urlencoded } from "express";
 import { Server as HttpServer, createServer as createHttpServer } from "http";
 import next from "next";
 import CookieParser from "cookie-parser";
-import UsersRoute from "./routes/usersroute";
+import UsersRoute from "./routes/usersroute"; */
 
-const { NODE_ENV, BACKEND_PORT, BACKEND_SECRET } = process.env;
+/* const { NODE_ENV, BACKEND_PORT, BACKEND_SECRET } = process.env;
 
 const port: number = Number(BACKEND_PORT);
 
@@ -29,4 +29,11 @@ nextServer.prepare().then(() => {
 	httpServer.listen(port, () => {
 		console.log(`Listening to port ${port}...`);
 	});
-});
+}); */
+
+import { config } from "dotenv";
+import ServersSingleton from "./singletons/servers";
+
+config();
+
+ServersSingleton.startServer();
