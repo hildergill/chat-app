@@ -40,12 +40,12 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 
 		return response.status(201).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
-		console.log(error);
-
 		if ((error as MysqlError).errno === 1062) {
 			const errors: Error[] = [{ errorKey: "errors:inputs.displayName.taken" }];
 			return response.status(401).json(errors);
 		} else {
+			console.log(error);
+
 			const errors: Error[] = [{ errorKey: "errors:serverError" }];
 			return response.status(500).json(errors);
 		}
@@ -68,12 +68,12 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 		const createdUserToken: UserToken = await createUserToken(databaseConnection, fetchedUser.id);
 		return response.status(200).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
-		console.log(error);
-
 		if (error === 0) {
 			const errors: Error[] = [{ errorKey: "errors:inputs.displayName.notExist" }];
 			return response.status(401).json(errors);
 		} else {
+			console.log(error);
+
 			const errors: Error[] = [{ errorKey: "errors:serverError" }];
 			return response.status(500).json(errors);
 		}

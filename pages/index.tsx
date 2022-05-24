@@ -9,7 +9,7 @@ import Error from "../models/error";
 
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
-	const [errors, setErrors] = useState<Error[]>([]);
+	const [errors, setErrors] = useState<Error[]>(null);
 
 	const { t } = useTranslation();
 
@@ -36,7 +36,7 @@ const IndexPage = () => {
 	};
 
 	return (
-		<UserDialog title={isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}>
+		<UserDialog errors={errors ?? null} title={isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}>
 			<div>
 				<button onClick={() => setSignUp(true)}>{t("indexpage:modeTitles.signUp")}</button>
 				<button onClick={() => setSignUp(false)}>{t("indexpage:modeTitles.logIn")}</button>

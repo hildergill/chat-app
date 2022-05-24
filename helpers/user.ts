@@ -28,7 +28,6 @@ export const fetchUserByDisplayName = (databaseConnection: Connection, displayNa
 		databaseConnection.query(queryString, displayName, (error, results: any[]) => {
 			if (error) return reject(error);
 
-			// TODO Add something here later
 			if (results.length !== 1) return reject(0);
 
 			const fetchedUser: any = results[0];
