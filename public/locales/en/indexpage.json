@@ -2,5 +2,14 @@
 	"pageTitle": {
 		"signUp": "Sign Up for Chat App",
 		"logIn": "Log In to Chat App"
+	},
+	"inputs": {
+		"displayName": "Display name",
+		"password": "Password",
+		"confirmPassword": "Confirm password"
+	},
+	"modeTitles": {
+		"signUp": "Sign Up",
+		"logIn": "Log In"
 	}
 }
