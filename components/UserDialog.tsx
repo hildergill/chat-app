@@ -7,20 +7,25 @@ export type UserDialogProps = PropsWithChildren<{
 	errors?: Error[];
 }>;
 
+const ErrorBox = (error: Error) => {
+	const { t } = useTranslation();
+
+	return (
+		<div>
+			<strong> {t(error.errorKey)}</strong>
+			{error.detailsKey && <p>{t(error.detailsKey)}</p>}
+		</div>
+	);
+};
+
 export const UserDialog = (props: UserDialogProps) => {
 	const { title, children, errors }: UserDialogProps = props;
 
-	const { t } = useTranslation();
-
-	const getErrorBoxes = (): JSX.Element[] =>
-		errors.map((error: Error, key: number) => {
-			return (
-				<div key={key}>
-					<strong> {t(error.errorKey)}</strong>
-					{error.detailsKey && <p>{t(error.detailsKey)}</p>}
-				</div>
-			);
+	const getErrorBoxes = (): JSX.Element[] => {
+		return errors.map((error: Error, key: number) => {
+			return <ErrorBox key={key} {...error} />;
 		});
+	};
 
 	return (
 		<div>
