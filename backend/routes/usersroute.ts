@@ -3,7 +3,6 @@ import Joi, { ValidationOptions } from "joi";
 import { LogInValidator, SignUpValidator } from "../../validators/uservalidators";
 import { convertValidationError } from "../../helpers/error";
 import { Connection, MysqlError } from "mysql";
-import { createDatabaseConnection } from "../../helpers/database";
 import User from "../../models/user";
 import { createUser, fetchUserByDisplayName } from "../../helpers/user";
 import UserToken from "../../models/usertoken";
@@ -32,11 +31,9 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 	const { value, error }: Joi.ValidationResult<SignUpBody> = SignUpValidator.validate(request.body, validationOptions);
 	if (error) return response.status(400).json(convertValidationError(error));
 
-	const databaseConnection: Connection = createDatabaseConnection();
-
 	try {
-		const createdUser: User = await createUser(databaseConnection, value),
-			createdUserToken: UserToken = await createUserToken(databaseConnection, createdUser.id);
+		const createdUser: User = await createUser(value),
+			createdUserToken: UserToken = await createUserToken(createdUser.id);
 
 		return response.status(201).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
@@ -49,8 +46,6 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 			const errors: Error[] = [{ errorKey: "errors:serverError" }];
 			return response.status(500).json(errors);
 		}
-	} finally {
-		databaseConnection.end();
 	}
 });
 
@@ -58,14 +53,12 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 	const { value, error }: Joi.ValidationResult<LogInBody> = LogInValidator.validate(request.body, validationOptions);
 	if (error) return response.status(400).json(convertValidationError(error));
 
-	const databaseConnection: Connection = createDatabaseConnection();
-
 	try {
-		const fetchedUser: User = await fetchUserByDisplayName(databaseConnection, value.displayName);
+		const fetchedUser: User = await fetchUserByDisplayName(value.displayName);
 
 		if (!(await compare(value.password, fetchedUser.password))) return response.status(401).end();
 
-		const createdUserToken: UserToken = await createUserToken(databaseConnection, fetchedUser.id);
+		const createdUserToken: UserToken = await createUserToken(fetchedUser.id);
 		return response.status(200).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
 		if (error === 0) {
@@ -77,7 +70,5 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 			const errors: Error[] = [{ errorKey: "errors:serverError" }];
 			return response.status(500).json(errors);
 		}
-	} finally {
-		databaseConnection.end();
 	}
 });
