@@ -2,7 +2,7 @@ type Message = {
 	id: string;
 	author: string;
 	content: string;
-	timestamp: any;
+	timestamp: number;
 };
 
 export default Message;

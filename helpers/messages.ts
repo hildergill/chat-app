@@ -6,13 +6,13 @@ import DatabaseConnectionSingleton from "../backend/singletons/databaseconnectio
 export const createMessage = (author: string, content: string): Promise<Message> =>
 	new Promise<Message>((resolve, reject) => {
 		const id: string = v4(),
-			timestamp: Date = new Date(),
+			timestamp: number = moment.utc().valueOf(),
 			queryString: string = "insert into messages values (?, ?, ?, ?)",
 			queryParams = [id, author, content, moment(timestamp).format("YYYY-MM-DD hh:mm:ss")];
 
 		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
-			return resolve({ id, author, content, timestamp: timestamp.toJSON() });
+			return resolve({ id, author, content, timestamp });
 		});
 	});
 
@@ -26,7 +26,7 @@ export const fetchLatestMessages = (limit: number = 20): Promise<Message[]> =>
 				id: message.id,
 				author: message.author,
 				content: message.content,
-				timestamp: new Date(message.timestamp).toJSON()
+				timestamp:message.timestamp
 			}));
 
 			return resolve(sanitizedMessagesArray);
