@@ -12,13 +12,13 @@ export const createMessage = (author: string, content: string): Promise<Message>
 
 		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
-			return resolve({ id, author, content, timestamp });
+			return resolve({ id, author, content, timestamp: timestamp.toJSON() });
 		});
 	});
 
 export const fetchLatestMessages = (limit: number = 20): Promise<Message[]> =>
 	new Promise<Message[]>(async (resolve, reject) => {
-		const queryString: string = "select * from messages order by timestamp desc limit ?";
+		const queryString: string = "select * from messages order by timestamp asc limit ?";
 
 		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, limit, (error, results: Message[]) => {
 			if (error) return reject(error);
@@ -26,7 +26,7 @@ export const fetchLatestMessages = (limit: number = 20): Promise<Message[]> =>
 				id: message.id,
 				author: message.author,
 				content: message.content,
-				timestamp: message.timestamp
+				timestamp: new Date(message.timestamp).toJSON()
 			}));
 
 			return resolve(sanitizedMessagesArray);

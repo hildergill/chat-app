@@ -9,17 +9,19 @@ import { verifyUserToken } from "../helpers/usertokens";
 import axios, { AxiosResponse } from "axios";
 import Message from "../models/message";
 import { MessageBox } from "../components/MessageBox";
+import { fetchLatestMessages } from "../helpers/messages";
 
 type Props = {
 	userToken: UserToken;
+	initialMessages: Message[];
 };
 
 const ChatPage = (props: Props) => {
-	const { userToken }: Props = props;
+	const { userToken, initialMessages }: Props = props;
 
 	const socketClient: Socket = useMemo(() => io(), []);
 
-	const [messages, setMessages] = useState<Message[]>([]);
+	const [messages, setMessages] = useState<Message[]>(initialMessages);
 
 	useEffect(() => {
 		socketClient.on(events.message.user, async () => {
@@ -72,9 +74,16 @@ export const getServerSideProps: ServerSideProps = async (context: Context) => {
 	const userToken: UserToken = CookieParser.JSONCookie(userTokenString) as UserToken;
 
 	try {
-		const isLoginValid: boolean = await verifyUserToken(userToken);
+		const isLoginValid: boolean = await verifyUserToken(userToken),
+			initialMessages: Message[] = await fetchLatestMessages();
 
-		return isLoginValid ? { props: { userToken } } : { redirect: { permanent: false, destination: "/" } };
+		return isLoginValid
+			? {
+					props: { userToken, initialMessages }
+			  }
+			: {
+					redirect: { permanent: false, destination: "/" }
+			  };
 	} catch (error) {
 		console.error(error);
 		return { redirect: { permanent: false, destination: "/" } };

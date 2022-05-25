@@ -6,7 +6,7 @@ export const MessageBox = (message: Message) => {
 		<div>
 			<strong>{message.author}</strong>
 			<p>{message.content}</p>
-			<code>{moment(message.timestamp).toLocaleString()}</code>
+			<code>{moment(message.timestamp).toString()}</code>
 		</div>
 	);
 };
