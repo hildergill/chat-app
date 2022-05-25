@@ -1,4 +1,4 @@
-import { FormEvent, FormEventHandler, useMemo } from "react";
+import { FormEvent, FormEventHandler, useEffect, useMemo, useState } from "react";
 import { GetServerSideProps, GetServerSidePropsContext as Context } from "next";
 import { Socket, io } from "socket.io-client";
 import events from "../events.json";
@@ -6,6 +6,8 @@ import UserToken from "../models/usertoken";
 import CookieParser from "cookie-parser";
 import { getUserTokenCookieName } from "../helpers/cookies";
 import { verifyUserToken } from "../helpers/usertokens";
+import axios, { AxiosResponse } from "axios";
+import Message from "../models/message";
 
 type Props = {
 	userToken: UserToken;
@@ -15,6 +17,20 @@ const ChatPage = (props: Props) => {
 	const { userToken }: Props = props;
 
 	const socketClient: Socket = useMemo(() => io(), []);
+
+	const [messages, setMessages] = useState<Message[]>([]);
+
+	useEffect(() => {
+		socketClient.on(events.message.user, async () => {
+			try {
+				const { data }: AxiosResponse<Message[]> = await axios.get("/api/messages/");
+				setMessages(data);
+			} catch (error) {
+				// TODO Add error handling here later
+				console.error(error);
+			}
+		});
+	}, []);
 
 	const onSubmitMessageForm: FormEventHandler = (event: FormEvent) => {
 		event.preventDefault();
