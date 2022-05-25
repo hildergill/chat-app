@@ -5,6 +5,7 @@ import events from "../events.json";
 import UserToken from "../models/usertoken";
 import CookieParser from "cookie-parser";
 import { getUserTokenCookieName } from "../helpers/cookie";
+import { verifyUserToken } from "../helpers/usertoken";
 
 type Props = {
 	userToken: UserToken;
@@ -45,15 +46,20 @@ type ServerSideProps = GetServerSideProps<Props>;
 
 export const getServerSideProps: ServerSideProps = async (context: Context) => {
 	const signedCookies = CookieParser.signedCookies(context.req.cookies, process.env.BACKEND_SECRET),
-		userToken = signedCookies[getUserTokenCookieName()];
+		userTokenString = signedCookies[getUserTokenCookieName()];
 
-	if (!userToken) return { redirect: { permanent: false, destination: "/" } };
+	if (!userTokenString) return { redirect: { permanent: false, destination: "/" } };
 
-	return {
-		props: {
-			userToken: CookieParser.JSONCookie(userToken) as UserToken
-		}
-	};
+	const userToken: UserToken = CookieParser.JSONCookie(userTokenString) as UserToken;
+
+	try {
+		const isLoginValid: boolean = await verifyUserToken(userToken);
+
+		return isLoginValid ? { props: { userToken } } : { redirect: { permanent: false, destination: "/" } };
+	} catch (error) {
+		console.log(error);
+		return { redirect: { permanent: false, destination: "/" } };
+	}
 };
 
 export default ChatPage;
