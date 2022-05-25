@@ -14,7 +14,7 @@ MessagesRoute.get("/", async (request: Request<FetchMessagesParams>, response: R
 	const { limit } = request.params;
 
 	try {
-		const messages: Message[] = await fetchLatestMessages(limit);
+		const messages: Message[] = await fetchLatestMessages(true, limit);
 		return response.status(200).send(messages);
 	} catch (error) {
 		console.error(error);

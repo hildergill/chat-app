@@ -75,7 +75,7 @@ export const getServerSideProps: ServerSideProps = async (context: Context) => {
 
 	try {
 		const isLoginValid: boolean = await verifyUserToken(userToken),
-			initialMessages: Message[] = await fetchLatestMessages();
+			initialMessages: Message[] = await fetchLatestMessages(true);
 
 		return isLoginValid
 			? {
