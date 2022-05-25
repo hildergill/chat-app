@@ -5,6 +5,7 @@ import { NextServer } from "next/dist/server/next";
 import CookieParser from "cookie-parser";
 import next from "next";
 import { Socket, Server as SocketServer } from "socket.io";
+import events from "../../events.json";
 
 export type MiddlewareItem = {
 	path: string;
@@ -33,6 +34,12 @@ class Servers {
 
 		this.socketServer.on("connection", (client: Socket) => {
 			console.log(`Client ${client.id} connected!`);
+
+			client.on(events.message.user, (author: string, messageString: string) => {
+				// TODO Add something here later
+
+				this.socketServer.emit(events.message.user);
+			});
 		});
 	}
 

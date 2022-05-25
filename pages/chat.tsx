@@ -12,6 +12,8 @@ type Props = {
 };
 
 const ChatPage = (props: Props) => {
+	const { userToken }: Props = props;
+
 	const socketClient: Socket = useMemo(() => io(), []);
 
 	const onSubmitMessageForm: FormEventHandler = (event: FormEvent) => {
@@ -22,7 +24,7 @@ const ChatPage = (props: Props) => {
 
 		messageInput.value = null;
 
-		socketClient.emit(events.message.user, messageString);
+		socketClient.emit(events.message.user, userToken.user, messageString);
 	};
 
 	return (
