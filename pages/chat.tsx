@@ -1,5 +1,6 @@
 import { FormEvent, FormEventHandler, useMemo } from "react";
 import { Socket, io } from "socket.io-client";
+import events from "../events.json";
 
 const ChatPage = () => {
 	const socketClient: Socket = useMemo(() => io(), []);
@@ -7,9 +8,12 @@ const ChatPage = () => {
 	const onSubmitMessageForm: FormEventHandler = (event: FormEvent) => {
 		event.preventDefault();
 
-		const messageString: string = (event.target as any).message.value;
+		const messageInput = (event.target as any).message,
+			messageString: string = messageInput.value;
 
-		console.log(messageString);
+		messageInput.value = null;
+
+		socketClient.emit(events.message.user, messageString);
 	};
 
 	return (
