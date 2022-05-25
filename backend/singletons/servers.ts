@@ -22,6 +22,8 @@ class Servers {
 	constructor() {
 		const { NODE_ENV } = process.env;
 
+		this.middlewares = [];
+
 		this.expressServer = express();
 		this.httpServer = createHttpServer(this.expressServer);
 		this.nextServer = next({ dev: NODE_ENV === "development" });
