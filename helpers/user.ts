@@ -13,9 +13,10 @@ export const createUser = (params: CreateUserParams): Promise<User> =>
 		const id: string = v4(),
 			password: string = await hash(params.password, 12),
 			{ displayName } = params,
-			queryString: string = "insert users values (?, ?, ?)";
+			queryString: string = "insert users values (?, ?, ?)",
+			queryParams = [id, displayName, password];
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, [id, displayName, password], (error) => {
+		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
 			return resolve({ id, displayName, password });
 		});

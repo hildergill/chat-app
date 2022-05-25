@@ -18,8 +18,8 @@ export const verifyUserToken = (userToken: UserToken): Promise<boolean> =>
 		const paramsArray = [userToken.token, userToken.user],
 			queryString: string = "select count(*) as count from user_tokens where token = ? and user = ?";
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, paramsArray, (error, results) => {
+		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, paramsArray, (error, [results]) => {
 			if (error) reject(error);
-			return resolve(results[0]["count"] === 1);
+			return resolve(results["count"] === 1);
 		});
 	});
