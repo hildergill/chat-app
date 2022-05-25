@@ -1,8 +1,8 @@
 /* import express, { Express, Request, Response, json, urlencoded } from "express";
 import { Server as HttpServer, createServer as createHttpServer } from "http";
 import next from "next";
-import CookieParser from "cookie-parser";
-import UsersRoute from "./routes/usersroute"; */
+import CookieParser from "cookie-parser";*/
+import UsersRoute from "./routes/usersroute";
 
 /* const { NODE_ENV, BACKEND_PORT, BACKEND_SECRET } = process.env;
 
@@ -36,4 +36,5 @@ import ServersSingleton from "./singletons/servers";
 
 config();
 
+ServersSingleton.addMiddleware("/api/users/", UsersRoute);
 ServersSingleton.startServer();

@@ -1,9 +1,14 @@
-import express, { Handler } from "express";
-import { Express, Request, Response, json, urlencoded } from "express";
+import express from "express";
+import { Express, Request, Response, Handler, json, urlencoded } from "express";
 import { Server as HttpServer, createServer as createHttpServer } from "http";
 import { NextServer } from "next/dist/server/next";
 import CookieParser from "cookie-parser";
 import next from "next";
+
+export type MiddlewareItem = {
+	path: string;
+	handler: Handler;
+};
 
 class Servers {
 	private static instance: Servers;
@@ -12,12 +17,18 @@ class Servers {
 	private httpServer: HttpServer;
 	private nextServer: NextServer;
 
+	private middlewares: MiddlewareItem[];
+
 	constructor() {
 		const { NODE_ENV } = process.env;
 
 		this.expressServer = express();
 		this.httpServer = createHttpServer(this.expressServer);
 		this.nextServer = next({ dev: NODE_ENV === "development" });
+	}
+
+	public addMiddleware(path: string, handler: Handler): void {
+		this.middlewares.push({ path, handler });
 	}
 
 	public startServer(): void {
@@ -29,6 +40,10 @@ class Servers {
 		this.nextServer.prepare().then(() => {
 			this.expressServer.use(json(), urlencoded({ extended: false }));
 			this.expressServer.use(CookieParser(BACKEND_SECRET));
+
+			this.middlewares.forEach(({ path, handler }: MiddlewareItem) => {
+				this.expressServer.use(path, handler);
+			});
 
 			// TODO Add something here later
 
