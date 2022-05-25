@@ -1,8 +1,16 @@
 import { FormEvent, FormEventHandler, useMemo } from "react";
+import { GetServerSideProps, GetServerSidePropsContext as Context } from "next";
 import { Socket, io } from "socket.io-client";
 import events from "../events.json";
+import UserToken from "../models/usertoken";
+import CookieParser from "cookie-parser";
+import { getUserTokenCookieName } from "../helpers/cookie";
 
-const ChatPage = () => {
+type Props = {
+	userToken: UserToken;
+};
+
+const ChatPage = (props: Props) => {
 	const socketClient: Socket = useMemo(() => io(), []);
 
 	const onSubmitMessageForm: FormEventHandler = (event: FormEvent) => {
@@ -31,6 +39,21 @@ const ChatPage = () => {
 			</form>
 		</div>
 	);
+};
+
+type ServerSideProps = GetServerSideProps<Props>;
+
+export const getServerSideProps: ServerSideProps = async (context: Context) => {
+	const signedCookies = CookieParser.signedCookies(context.req.cookies, process.env.BACKEND_SECRET),
+		userToken = signedCookies[getUserTokenCookieName()];
+
+	if (!userToken) return { redirect: { permanent: false, destination: "/" } };
+
+	return {
+		props: {
+			userToken: CookieParser.JSONCookie(userToken) as UserToken
+		}
+	};
 };
 
 export default ChatPage;
