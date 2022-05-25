@@ -8,7 +8,7 @@ export const createMessage = (author: string, content: string): Promise<Message>
 		const id: string = v4(),
 			timestamp: number = moment.utc().valueOf(),
 			queryString: string = "insert into messages values (?, ?, ?, ?)",
-			queryParams = [id, author, content, moment(timestamp).format("YYYY-MM-DD hh:mm:ss")];
+			queryParams = [id, author, content, timestamp];
 
 		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
@@ -26,7 +26,7 @@ export const fetchLatestMessages = (limit: number = 20): Promise<Message[]> =>
 				id: message.id,
 				author: message.author,
 				content: message.content,
-				timestamp:message.timestamp
+				timestamp: message.timestamp
 			}));
 
 			return resolve(sanitizedMessagesArray);

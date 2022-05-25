@@ -21,7 +21,7 @@ create table `chat_app`.`messages` (
     `id` char(36) not null,
     `author` char(36) not null,
     `content` text not null,
-    `timestamp` datetime not null,
+    `timestamp` bigint not null,
 
     primary key (`id`),
     foreign key (`author`) references `chat_app`.`users` (`id`)

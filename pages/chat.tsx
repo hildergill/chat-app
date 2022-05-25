@@ -79,7 +79,7 @@ export const getServerSideProps: ServerSideProps = async (context: Context) => {
 
 		return isLoginValid
 			? {
-					props: { userToken, initialMessages }
+					props: { userToken, initialMessages: initialMessages ?? [] }
 			  }
 			: {
 					redirect: { permanent: false, destination: "/" }

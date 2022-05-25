@@ -6,7 +6,7 @@ export const MessageBox = (message: Message) => {
 		<div>
 			<strong>{message.author}</strong>
 			<p>{message.content}</p>
-			<code>{moment(message.timestamp).toString()}</code>
+			<code>{moment(message.timestamp).format("DD-MM-YY hh:mm:ssA")}</code>
 		</div>
 	);
 };
