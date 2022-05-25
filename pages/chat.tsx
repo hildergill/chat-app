@@ -8,6 +8,7 @@ import { getUserTokenCookieName } from "../helpers/cookies";
 import { verifyUserToken } from "../helpers/usertokens";
 import axios, { AxiosResponse } from "axios";
 import Message from "../models/message";
+import { MessageBox } from "../components/MessageBox";
 
 type Props = {
 	userToken: UserToken;
@@ -43,13 +44,13 @@ const ChatPage = (props: Props) => {
 		socketClient.emit(events.message.user, userToken.user, messageString);
 	};
 
+	const messageBoxes: JSX.Element[] = messages.map((item: Message, key: number) => {
+		return <MessageBox {...item} key={key} />;
+	});
+
 	return (
 		<div>
-			<div>
-				{/* TODO Add something here later */}
-				{/* TODO Add something here later */}
-				{/* TODO Add something here later */}
-			</div>
+			<div>{messageBoxes}</div>
 
 			<form onSubmit={onSubmitMessageForm}>
 				<label htmlFor="message">Message:</label>
