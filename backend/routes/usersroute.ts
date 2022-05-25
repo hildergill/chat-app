@@ -1,13 +1,13 @@
 import { Router, Request, Response } from "express";
 import Joi, { ValidationOptions } from "joi";
 import { LogInValidator, SignUpValidator } from "../../validators/uservalidators";
-import { convertValidationError } from "../../helpers/error";
-import { Connection, MysqlError } from "mysql";
+import { convertValidationError } from "../../helpers/errors";
+import { MysqlError } from "mysql";
 import User from "../../models/user";
-import { createUser, fetchUserByDisplayName } from "../../helpers/user";
+import { createUser, fetchUserByDisplayName } from "../../helpers/users";
 import UserToken from "../../models/usertoken";
-import { createUserToken } from "../../helpers/usertoken";
-import { getCookieOptions, getUserTokenCookieName } from "../../helpers/cookie";
+import { createUserToken } from "../../helpers/usertokens";
+import { getCookieOptions, getUserTokenCookieName } from "../../helpers/cookies";
 import { compare } from "bcrypt";
 import Error from "../../models/error";
 

@@ -4,8 +4,8 @@ import { Socket, io } from "socket.io-client";
 import events from "../events.json";
 import UserToken from "../models/usertoken";
 import CookieParser from "cookie-parser";
-import { getUserTokenCookieName } from "../helpers/cookie";
-import { verifyUserToken } from "../helpers/usertoken";
+import { getUserTokenCookieName } from "../helpers/cookies";
+import { verifyUserToken } from "../helpers/usertokens";
 
 type Props = {
 	userToken: UserToken;
