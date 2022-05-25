@@ -17,4 +17,14 @@ create table `chat_app`.`user_tokens` (
     foreign key (`user`) references `chat_app`.`users` (`id`)
 );
 
+create table `chat_app`.`messages` (
+    `id` char(36) not null,
+    `author` char(36) not null,
+    `context` text not null,
+    `timestamp` datetime not null,
+
+    primary key (`id`),
+    foreign key (`author`) references `chat_app`.`users` (`id`)
+);
+
 -- TODO Add something here later
