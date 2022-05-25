@@ -15,3 +15,13 @@ export const createMessage = (author: string, content: string): Promise<Message>
 			return resolve({ id, author, content, timestamp });
 		});
 	});
+
+export const fetchLatestMessages = (limit: number = 20): Promise<Message[]> =>
+	new Promise<Message[]>(async (resolve, reject) => {
+		const queryString: string = "select * from messages order by timestamp desc limit ?";
+
+		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, limit, (error, results) => {
+			if (error) return reject(error);
+			return resolve(results);
+		});
+	});
