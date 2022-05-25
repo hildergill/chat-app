@@ -41,7 +41,7 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 			const errors: Error[] = [{ errorKey: "errors:inputs.displayName.taken" }];
 			return response.status(401).json(errors);
 		} else {
-			console.log(error);
+			console.error(error);
 
 			const errors: Error[] = [{ errorKey: "errors:serverError" }];
 			return response.status(500).json(errors);
@@ -65,7 +65,7 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 			const errors: Error[] = [{ errorKey: "errors:inputs.displayName.notExist" }];
 			return response.status(401).json(errors);
 		} else {
-			console.log(error);
+			console.error(error);
 
 			const errors: Error[] = [{ errorKey: "errors:serverError" }];
 			return response.status(500).json(errors);

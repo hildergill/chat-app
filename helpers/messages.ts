@@ -20,8 +20,15 @@ export const fetchLatestMessages = (limit: number = 20): Promise<Message[]> =>
 	new Promise<Message[]>(async (resolve, reject) => {
 		const queryString: string = "select * from messages order by timestamp desc limit ?";
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, limit, (error, results) => {
+		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, limit, (error, results: Message[]) => {
 			if (error) return reject(error);
-			return resolve(results);
+			const sanitizedMessagesArray: Message[] = results.map((message: Message) => ({
+				id: message.id,
+				author: message.author,
+				content: message.content,
+				timestamp: message.timestamp
+			}));
+
+			return resolve(sanitizedMessagesArray);
 		});
 	});

@@ -59,7 +59,7 @@ export const getServerSideProps: ServerSideProps = async (context: Context) => {
 
 		return isLoginValid ? { props: { userToken } } : { redirect: { permanent: false, destination: "/" } };
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return { redirect: { permanent: false, destination: "/" } };
 	}
 };

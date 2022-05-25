@@ -20,7 +20,7 @@ create table `chat_app`.`user_tokens` (
 create table `chat_app`.`messages` (
     `id` char(36) not null,
     `author` char(36) not null,
-    `context` text not null,
+    `content` text not null,
     `timestamp` datetime not null,
 
     primary key (`id`),
