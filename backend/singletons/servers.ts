@@ -30,6 +30,10 @@ class Servers {
 		this.httpServer = createHttpServer(this.expressServer);
 		this.nextServer = next({ dev: NODE_ENV === "development" });
 		this.socketServer = new SocketServer(this.httpServer);
+
+		this.socketServer.on("connection", (client: Socket) => {
+			console.log(`Client ${client.id} connected!`);
+		});
 	}
 
 	public addMiddleware(path: string, handler: Handler): void {
