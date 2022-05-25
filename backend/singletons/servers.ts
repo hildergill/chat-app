@@ -4,6 +4,7 @@ import { Server as HttpServer, createServer as createHttpServer } from "http";
 import { NextServer } from "next/dist/server/next";
 import CookieParser from "cookie-parser";
 import next from "next";
+import { Socket, Server as SocketServer } from "socket.io";
 
 export type MiddlewareItem = {
 	path: string;
@@ -16,6 +17,7 @@ class Servers {
 	private expressServer: Express;
 	private httpServer: HttpServer;
 	private nextServer: NextServer;
+	private socketServer: SocketServer;
 
 	private middlewares: MiddlewareItem[];
 
@@ -27,6 +29,7 @@ class Servers {
 		this.expressServer = express();
 		this.httpServer = createHttpServer(this.expressServer);
 		this.nextServer = next({ dev: NODE_ENV === "development" });
+		this.socketServer = new SocketServer(this.httpServer);
 	}
 
 	public addMiddleware(path: string, handler: Handler): void {
