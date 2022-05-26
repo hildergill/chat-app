@@ -24,7 +24,7 @@ const ChatPage = (props: Props) => {
 	const [messages, setMessages] = useState<Message[]>(initialMessages);
 
 	useEffect(() => {
-		socketClient.on(events.message.user, async () => {
+		socketClient.on(events.message, async () => {
 			try {
 				const { data }: AxiosResponse<Message[]> = await axios.get("/api/messages/");
 				setMessages(data);
@@ -43,7 +43,7 @@ const ChatPage = (props: Props) => {
 
 		messageInput.value = null;
 
-		socketClient.emit(events.message.user, userToken.user, messageString);
+		socketClient.emit(events.message, userToken.user, messageString);
 	};
 
 	const messageBoxes: JSX.Element[] = messages.map((item: Message, key: number) => {

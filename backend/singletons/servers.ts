@@ -36,10 +36,10 @@ class Servers {
 		this.socketServer.on("connection", (client: Socket) => {
 			console.log(`Client ${client.id} connected!`);
 
-			client.on(events.message.user, async (author: string, content: string) => {
+			client.on(events.message, async (author: string, content: string) => {
 				try {
 					await createMessage(author, content);
-					this.socketServer.emit(events.message.user);
+					this.socketServer.emit(events.message);
 				} catch (error) {
 					console.error(error);
 				}
