@@ -5,6 +5,7 @@ import { GetServerSideProps as PropsFunction, GetServerSidePropsContext as Conte
 import axios, { AxiosError } from "axios";
 import Error from "../models/error";
 import { getDisplayNameMaxLength, getPasswordMinLength } from "../validators/uservalidators";
+import { ErrorBox } from "../components/ErrorBox";
 
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
@@ -32,6 +33,12 @@ const IndexPage = () => {
 			const { response }: AxiosError<Error[]> = error;
 			setErrors(response.data);
 		}
+	};
+
+	const getErrorBoxes = (): JSX.Element[] => {
+		return errors.map((error: Error, key: number) => {
+			return <ErrorBox key={key} {...error} />;
+		});
 	};
 
 	return (
@@ -70,6 +77,8 @@ const IndexPage = () => {
 						</>
 					)}
 				</form>
+
+				{errors && getErrorBoxes()}
 			</main>
 		</div>
 	);
