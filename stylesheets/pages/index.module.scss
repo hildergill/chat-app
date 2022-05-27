@@ -18,6 +18,18 @@
 		box-shadow: constants.$preset-shadow;
 		border-radius: constants.$dimens-border-radius;
 
+		.tabSelector {
+			display: flex;
+			flex-direction: row;
+
+			button {
+				padding: 0.5rem 0;
+				flex: 1;
+				font-size: 1rem;
+				font-family: "Roboto", sans-serif;
+			}
+		}
+
 		.userForm {
 			display: grid;
 			grid-template-columns: 10rem auto;

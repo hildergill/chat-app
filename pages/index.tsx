@@ -47,7 +47,7 @@ const IndexPage = () => {
 			<main className={IndexPageStyle.mainContainer}>
 				<h1>{isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}</h1>
 
-				<div>
+				<div className={IndexPageStyle.tabSelector}>
 					<button onClick={() => setSignUp(true)}>{t("indexpage:modeTitles.signUp")}</button>
 					<button onClick={() => setSignUp(false)}>{t("indexpage:modeTitles.logIn")}</button>
 				</div>
