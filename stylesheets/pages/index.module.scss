@@ -27,6 +27,43 @@
 				flex: 1;
 				font-size: 1rem;
 				font-family: "Roboto", sans-serif;
+				background: none;
+				border: none;
+				box-shadow: inset constants.$preset-shadow;
+				cursor: pointer;
+
+				&:first-child {
+					border-top-left-radius: constants.$dimens-border-radius;
+					border-bottom-left-radius: constants.$dimens-border-radius;
+				}
+
+				&:last-child {
+					border-top-right-radius: constants.$dimens-border-radius;
+					border-bottom-right-radius: constants.$dimens-border-radius;
+				}
+			}
+
+			.active {
+				background-color: map-get(constants.$color-background, "dark");
+			}
+
+			.inactive {
+				box-shadow: none;
+				background-color: map-get(constants.$color-background, "base");
+				border-top: 1px solid map-get(constants.$color-background, "dark");
+				border-bottom: 1px solid map-get(constants.$color-background, "dark");
+
+				&:first-child {
+					border-left: 1px solid map-get(constants.$color-background, "dark");
+				}
+
+				&:last-child {
+					border-right: 1px solid map-get(constants.$color-background, "dark");
+				}
+
+				&:hover {
+					background-color: map-get(constants.$color-background, "light");
+				}
 			}
 		}
 

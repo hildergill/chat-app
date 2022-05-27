@@ -48,8 +48,13 @@ const IndexPage = () => {
 				<h1>{isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}</h1>
 
 				<div className={IndexPageStyle.tabSelector}>
-					<button onClick={() => setSignUp(true)}>{t("indexpage:modeTitles.signUp")}</button>
-					<button onClick={() => setSignUp(false)}>{t("indexpage:modeTitles.logIn")}</button>
+					<button className={isSignUp ? IndexPageStyle.active : IndexPageStyle.inactive} onClick={() => setSignUp(true)}>
+						{t("indexpage:modeTitles.signUp")}
+					</button>
+
+					<button className={isSignUp ? IndexPageStyle.inactive : IndexPageStyle.active} onClick={() => setSignUp(false)}>
+						{t("indexpage:modeTitles.logIn")}
+					</button>
 				</div>
 
 				<form onSubmit={onSubmitMainForm} className={IndexPageStyle.userForm}>
