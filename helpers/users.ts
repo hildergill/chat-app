@@ -26,8 +26,11 @@ export const fetchUserByDisplayName = (displayName: String): Promise<User> =>
 	new Promise<User>((resolve, reject) => {
 		const queryString: string = "select * from users where display_name = ?";
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, displayName, (error, [result]) => {
+		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, displayName, (error, results: any[]) => {
 			if (error) return reject(error);
+			if (results.length !== 1) return reject(0);
+
+			const [result] = results;
 
 			try {
 				return resolve({
