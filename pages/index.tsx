@@ -1,11 +1,10 @@
 import { useTranslation } from "next-i18next";
 import { FormEvent, FormEventHandler, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { UserDialog } from "../components/UserDialog";
 import { GetServerSideProps as PropsFunction, GetServerSidePropsContext as Context } from "next";
-import { LabelInput } from "../components/LabeledInput";
 import axios, { AxiosError } from "axios";
 import Error from "../models/error";
+import { getDisplayNameMaxLength, getPasswordMinLength } from "../validators/uservalidators";
 
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
@@ -36,29 +35,43 @@ const IndexPage = () => {
 	};
 
 	return (
-		<UserDialog errors={errors ?? null} title={isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}>
-			<div>
-				<button onClick={() => setSignUp(true)}>{t("indexpage:modeTitles.signUp")}</button>
-				<button onClick={() => setSignUp(false)}>{t("indexpage:modeTitles.logIn")}</button>
-			</div>
+		<div>
+			<main>
+				<h1>{isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}</h1>
 
-			<form onSubmit={onSubmitMainForm}>
-				{isSignUp ? (
-					<>
-						<LabelInput type="text" name="displayName" label={t("indexpage:inputs.displayName")} required={true} />
-						<LabelInput type="password" name="password" label={t("indexpage:inputs.password")} required={true} />
-						<LabelInput type="password" name="confirmPassword" label={t("indexpage:inputs.confirmPassword")} required={true} />
-					</>
-				) : (
-					<>
-						<LabelInput type="text" name="displayName" label={t("indexpage:inputs.displayName")} required={true} />
-						<LabelInput type="password" name="password" label={t("indexpage:inputs.password")} required={true} />
-					</>
-				)}
+				<div>
+					<button onClick={() => setSignUp(true)}>{t("indexpage:modeTitles.signUp")}</button>
+					<button onClick={() => setSignUp(false)}>{t("indexpage:modeTitles.logIn")}</button>
+				</div>
 
-				<input type="submit" value={isSignUp ? t("indexpage:modeTitles.signUp") : t("indexpage:modeTitles.logIn")} />
-			</form>
-		</UserDialog>
+				<form onSubmit={onSubmitMainForm}>
+					{isSignUp ? (
+						<>
+							<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>
+							<input type="text" name="displayName" id="displayName" required maxLength={getDisplayNameMaxLength()} />
+
+							<label htmlFor="password">{t("indexpage:inputs.password")}</label>
+							<input type="password" name="password" id="password" required minLength={getPasswordMinLength()} />
+
+							<label htmlFor="confirmPassword">{t("indexpage:inputs.confirmPassword")}</label>
+							<input type="password" name="confirmPassword" id="confirmPassword" required minLength={getPasswordMinLength()} />
+
+							<input type="submit" value={t("indexpage:modeTitles.signUp")} />
+						</>
+					) : (
+						<>
+							<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>
+							<input type="text" name="displayName" id="displayName" required maxLength={getDisplayNameMaxLength()} />
+
+							<label htmlFor="password">{t("indexpage:inputs.password")}</label>
+							<input type="password" name="password" id="password" required minLength={getPasswordMinLength()} />
+
+							<input type="submit" value={t("indexpage:modeTitles.logIn")} />
+						</>
+					)}
+				</form>
+			</main>
+		</div>
 	);
 };
 

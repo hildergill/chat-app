@@ -1,14 +1,14 @@
 import Joi from "joi";
 import { SignUpBody, LogInBody } from "../backend/routes/usersroute";
 
-const DisplayNameMaxLength: number = 256;
-const PasswordMinLength: number = 8;
+export const getDisplayNameMaxLength = (): number => 256;
+export const getPasswordMinLength = (): number => 8;
 
 export const SignUpValidator = Joi.object<SignUpBody, true, SignUpBody>({
-	displayName: Joi.string().required().max(DisplayNameMaxLength).messages({
+	displayName: Joi.string().required().max(getDisplayNameMaxLength()).messages({
 		"string.max": "errrors:inputs.displayName.max"
 	}),
-	password: Joi.string().required().min(PasswordMinLength).messages({
+	password: Joi.string().required().min(getPasswordMinLength()).messages({
 		"string.min": "errors:inputs.password.min"
 	}),
 	confirmPassword: Joi.string().required().valid(Joi.ref("password")).messages({
@@ -19,10 +19,10 @@ export const SignUpValidator = Joi.object<SignUpBody, true, SignUpBody>({
 });
 
 export const LogInValidator = Joi.object<LogInBody, true, LogInBody>({
-	displayName: Joi.string().required().max(DisplayNameMaxLength).messages({
+	displayName: Joi.string().required().max(getDisplayNameMaxLength()).messages({
 		"string.max": "errrors:inputs.displayName.max"
 	}),
-	password: Joi.string().required().min(PasswordMinLength).messages({
+	password: Joi.string().required().min(getPasswordMinLength()).messages({
 		"string.min": "errors:inputs.password.min"
 	})
 }).messages({
