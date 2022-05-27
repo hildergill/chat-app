@@ -1,0 +1,49 @@
+@use "../constants.scss";
+
+.indexPage {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: map-get(constants.$color-background, "dark");
+
+	.mainContainer {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		background-color: map-get(constants.$color-background, "base");
+		width: 40rem;
+		padding: 1rem;
+		box-shadow: constants.$preset-shadow;
+		border-radius: constants.$dimens-border-radius;
+
+		.userForm {
+			display: grid;
+			grid-template-columns: 10rem auto;
+			grid-auto-rows: 2rem;
+			gap: 1rem 0.5rem;
+
+			* {
+				font-size: 1rem;
+				font-family: "Roboto", sans-serif;
+			}
+
+			label {
+				margin: auto 0;
+			}
+
+			input {
+				grid-column: 2/3;
+				padding-left: 0.5rem;
+				padding-right: 0.5rem;
+
+				&[type="submit"] {
+					grid-row: 4/5;
+					justify-self: flex-end;
+					width: 8rem;
+				}
+			}
+		}
+	}
+}

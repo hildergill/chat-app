@@ -6,6 +6,7 @@ import axios, { AxiosError } from "axios";
 import Error from "../models/error";
 import { getDisplayNameMaxLength, getPasswordMinLength } from "../validators/uservalidators";
 import { ErrorBox } from "../components/ErrorBox";
+import IndexPageStyle from "../stylesheets/pages/index.module.scss";
 
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
@@ -42,8 +43,8 @@ const IndexPage = () => {
 	};
 
 	return (
-		<div>
-			<main>
+		<div className={IndexPageStyle.indexPage}>
+			<main className={IndexPageStyle.mainContainer}>
 				<h1>{isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}</h1>
 
 				<div>
@@ -51,7 +52,7 @@ const IndexPage = () => {
 					<button onClick={() => setSignUp(false)}>{t("indexpage:modeTitles.logIn")}</button>
 				</div>
 
-				<form onSubmit={onSubmitMainForm}>
+				<form onSubmit={onSubmitMainForm} className={IndexPageStyle.userForm}>
 					{isSignUp ? (
 						<>
 							<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>

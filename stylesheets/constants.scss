@@ -6,6 +6,10 @@ $color-background: (
 );
 
 $color-foreground: (
-	dark: hsl(0, 0%, 88%),
+	dark: hsl(0, 0%, 80%),
 	base: hsl(0, 0%, 96%)
 );
+
+$preset-shadow: 0 0 2px map-get($color-background, "shadow");
+
+$dimens-border-radius: 4px;

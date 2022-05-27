@@ -12,5 +12,5 @@
 :root {
 	font-family: "Roboto", sans-serif;
 	color-scheme: dark;
-	background-color: map-get(constants.$color-background, base);
+	background-color: map-get(constants.$color-background, "base");
 }
