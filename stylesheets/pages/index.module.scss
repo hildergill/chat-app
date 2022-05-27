@@ -86,11 +86,29 @@
 				grid-column: 2/3;
 				padding-left: 0.5rem;
 				padding-right: 0.5rem;
+				box-shadow: inset constants.$preset-shadow;
+				border: none;
+				color: map-get(constants.$color-foreground, "dark");
+				border-radius: constants.$dimens-border-radius;
+
+				&:focus {
+					color: map-get(constants.$color-foreground, "base");
+				}
 
 				&[type="submit"] {
 					grid-row: 4/5;
 					justify-self: flex-end;
 					width: 8rem;
+					box-shadow: none;
+					border-radius: 100vh;
+					background-color: map-get(constants.$color-background, "base");
+					border: 1px solid map-get(constants.$color-background, "dark");
+					cursor: pointer;
+
+					&:hover {
+						background-color: map-get(constants.$color-background, "light");
+						color: map-get(constants.$color-foreground, "base");
+					}
 				}
 			}
 		}
