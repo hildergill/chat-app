@@ -8,7 +8,6 @@ import { getUserTokenCookieName } from "../helpers/cookies";
 import { verifyUserToken } from "../helpers/usertokens";
 import axios, { AxiosResponse } from "axios";
 import Message from "../models/message";
-import { MessageBox } from "../components/MessageBox";
 import { fetchLatestMessages } from "../helpers/messages";
 
 type Props = {
@@ -47,7 +46,7 @@ const ChatPage = (props: Props) => {
 	};
 
 	const messageBoxes: JSX.Element[] = messages.map((item: Message, key: number) => {
-		return <MessageBox {...item} key={key} />;
+		return <p key={key}>{`${item.displayName} - ${item.content}`}</p>;
 	});
 
 	return (
