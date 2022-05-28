@@ -29,19 +29,47 @@
 		border-top: 1px solid map-get(constants.$color-background, "dark");
 		padding: 0.5rem;
 
-		input {
+		input[type="text"] {
 			padding: 0.5rem;
 			font-size: 1rem;
 			font-family: "Roboto", sans-serif;
+			flex: 1;
+			box-shadow: inset constants.$preset-shadow;
+			background-color: map-get(constants.$color-background, "dark");
 
-			&[type="text"] {
-				flex: 1;
+			&:focus {
+				color: map-get(constants.$color-foreground, "base");
 			}
 		}
 
 		button[type="reset"],
 		button[type="submit"] {
+			background-color: map-get(constants.$color-background, "base");
 			aspect-ratio: 1/1;
+			cursor: pointer;
+
+			&:hover {
+				color: map-get(constants.$color-foreground, "base");
+			}
+		}
+
+		& > * {
+			color: map-get(constants.$color-foreground, "dark");
+			border-top: 1px solid map-get(constants.$color-background, "dark");
+			border-bottom: 1px solid map-get(constants.$color-background, "dark");
+			border-right: 1px solid map-get(constants.$color-background, "dark");
+			border-left: none;
+
+			&:first-child {
+				border-left: 1px solid map-get(constants.$color-background, "dark");
+				border-top-left-radius: constants.$dimens-border-radius;
+				border-bottom-left-radius: constants.$dimens-border-radius;
+			}
+
+			&:last-child {
+				border-top-right-radius: constants.$dimens-border-radius;
+				border-bottom-right-radius: constants.$dimens-border-radius;
+			}
 		}
 	}
 }
