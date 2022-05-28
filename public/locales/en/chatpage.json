@@ -1,0 +1,12 @@
+{
+	"usersSection": "Users",
+	"messageInput": {
+		"placeholder": "Enter your message here"
+	},
+	"resetButton": {
+		"title": "Clear the message input"
+	},
+	"sendButton": {
+		"title": "Send the entered message"
+	}
+}

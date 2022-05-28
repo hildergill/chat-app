@@ -14,19 +14,24 @@ import ChatPageStyles from "../stylesheets/pages/chat.module.scss";
 import { MessageBox } from "../components/messagebox";
 import { fetchUsers } from "../helpers/users";
 import User from "../models/user";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 type Props = {
 	userToken: UserToken;
-	users: string[];
+	initialUsers: string[];
 	initialMessages: Message[];
 };
 
 const ChatPage = (props: Props) => {
-	const { userToken, users, initialMessages }: Props = props;
+	const { userToken, initialUsers, initialMessages }: Props = props;
+
+	const { t } = useTranslation();
 
 	const socketClient: Socket = useMemo(() => io(), []);
 
 	const [messages, setMessages] = useState<Message[]>(initialMessages);
+	const [users, setUsers] = useState<string[]>(initialUsers);
 
 	useEffect(() => {
 		socketClient.on(events.message, async () => {
@@ -61,18 +66,21 @@ const ChatPage = (props: Props) => {
 
 	return (
 		<div className={ChatPageStyles.chatPage}>
-			<ul className={ChatPageStyles.usersList}>{displayNames}</ul>
+			<div className={ChatPageStyles.usersList}>
+				<h3>{t("chatpage:usersSection")}</h3>
+				<ul>{displayNames}</ul>
+			</div>
 
 			<div className={ChatPageStyles.messageBoxList}>{messageBoxes}</div>
 
 			<form onSubmit={onSubmitMessageForm} className={ChatPageStyles.messageInput}>
-				<input type="text" name="message" id="message" required />
+				<input type="text" name="message" id="message" required placeholder={t("chatpage:messageInput.placeholder")} />
 
-				<button type="reset">
+				<button type="reset" title={t("chatpage:resetButton.title")}>
 					<IconTrash />
 				</button>
 
-				<button type="submit">
+				<button type="submit" title={t("chatpage:sendButton.title")}>
 					<IconSend />
 				</button>
 			</form>
@@ -98,9 +106,10 @@ export const getServerSideProps: ServerSideProps = async (context: Context) => {
 		return isLoginValid
 			? {
 					props: {
-						users: users ?? [],
 						userToken,
-						initialMessages: initialMessages ?? []
+						initialUsers: users ?? [],
+						initialMessages: initialMessages ?? [],
+						...(await serverSideTranslations(context.locale))
 					}
 			  }
 			: {

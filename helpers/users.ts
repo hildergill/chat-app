@@ -24,7 +24,7 @@ export const createUser = (params: CreateUserParams): Promise<User> =>
 
 export const fetchUsers = (): Promise<User[]> =>
 	new Promise<User[]>((resolve, reject) => {
-		const queryString: string = "select * from users";
+		const queryString: string = "select * from users order by display_name asc";
 
 		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, (error, results: any[]) => {
 			if (error) return reject(error);
@@ -35,7 +35,6 @@ export const fetchUsers = (): Promise<User[]> =>
 				password: user["password"]
 			}));
 
-			console.log(fetchedUser);
 			return resolve(fetchedUser);
 		});
 	});

@@ -8,15 +8,20 @@
 
 	.usersList {
 		padding: 1rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
+		border-right: 1px solid map-get(constants.$color-background, "dark");
 		grid-column: 1/2;
 		grid-row: 1/3;
-		border-right: 1px solid map-get(constants.$color-background, "dark");
 
-		li {
-			list-style: none;
+		ul {
+			margin-top: 1rem;
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+
+			li {
+				color: map-get(constants.$color-foreground, "dark");
+				list-style: none;
+			}
 		}
 	}
 
