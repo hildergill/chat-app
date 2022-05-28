@@ -22,6 +22,24 @@ export const createUser = (params: CreateUserParams): Promise<User> =>
 		});
 	});
 
+export const fetchUsers = (): Promise<User[]> =>
+	new Promise<User[]>((resolve, reject) => {
+		const queryString: string = "select * from users";
+
+		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, (error, results: any[]) => {
+			if (error) return reject(error);
+
+			const fetchedUser: User[] = results.map((user) => ({
+				id: user["id"],
+				displayName: user["display_name"],
+				password: user["password"]
+			}));
+
+			console.log(fetchedUser);
+			return resolve(fetchedUser);
+		});
+	});
+
 export const fetchUserByDisplayName = (displayName: String): Promise<User> =>
 	new Promise<User>((resolve, reject) => {
 		const queryString: string = "select * from users where display_name = ?";

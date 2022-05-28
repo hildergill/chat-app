@@ -12,14 +12,17 @@ import { fetchLatestMessages } from "../helpers/messages";
 import { IconSend, IconTrash } from "@tabler/icons";
 import ChatPageStyles from "../stylesheets/pages/chat.module.scss";
 import { MessageBox } from "../components/messagebox";
+import { fetchUsers } from "../helpers/users";
+import User from "../models/user";
 
 type Props = {
 	userToken: UserToken;
+	users: string[];
 	initialMessages: Message[];
 };
 
 const ChatPage = (props: Props) => {
-	const { userToken, initialMessages }: Props = props;
+	const { userToken, users, initialMessages }: Props = props;
 
 	const socketClient: Socket = useMemo(() => io(), []);
 
@@ -52,9 +55,13 @@ const ChatPage = (props: Props) => {
 		return <MessageBox key={key} {...item} />;
 	});
 
+	const displayNames: JSX.Element[] = users.map((displayName: string, key: number) => {
+		return <p key={key}>{displayName}</p>;
+	});
+
 	return (
 		<div className={ChatPageStyles.chatPage}>
-			<div className={ChatPageStyles.usersList}>{/* TODO Add something here later */}</div>
+			<div className={ChatPageStyles.usersList}>{displayNames}</div>
 
 			<div className={ChatPageStyles.messageBoxList}>{messageBoxes}</div>
 
@@ -85,11 +92,16 @@ export const getServerSideProps: ServerSideProps = async (context: Context) => {
 
 	try {
 		const isLoginValid: boolean = await verifyUserToken(userToken),
-			initialMessages: Message[] = await fetchLatestMessages(true);
+			initialMessages: Message[] = await fetchLatestMessages(true),
+			users: string[] = (await fetchUsers()).map(({ displayName }: User) => displayName);
 
 		return isLoginValid
 			? {
-					props: { userToken, initialMessages: initialMessages ?? [] }
+					props: {
+						users: users ?? [],
+						userToken,
+						initialMessages: initialMessages ?? []
+					}
 			  }
 			: {
 					redirect: { permanent: false, destination: "/" }
