@@ -11,6 +11,7 @@ import Message from "../models/message";
 import { fetchLatestMessages } from "../helpers/messages";
 import { IconSend, IconTrash } from "@tabler/icons";
 import ChatPageStyles from "../stylesheets/pages/chat.module.scss";
+import { MessageBox } from "../components/messagebox";
 
 type Props = {
 	userToken: UserToken;
@@ -48,7 +49,7 @@ const ChatPage = (props: Props) => {
 	};
 
 	const messageBoxes: JSX.Element[] = messages.map((item: Message, key: number) => {
-		return <p key={key}>{`${item.displayName} - ${item.content}`}</p>;
+		return <MessageBox key={key} {...item} />;
 	});
 
 	return (
