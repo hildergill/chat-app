@@ -32,6 +32,7 @@
 		scrollbar-width: thin;
 		background-color: map-get(constants.$color-background, "dark");
 		box-shadow: inset constants.$preset-shadow;
+		scroll-behavior: smooth;
 	}
 
 	.messageInput {

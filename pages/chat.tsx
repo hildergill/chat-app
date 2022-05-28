@@ -1,4 +1,4 @@
-import { FormEvent, FormEventHandler, useEffect, useMemo, useState } from "react";
+import { createRef, FormEvent, FormEventHandler, RefObject, useEffect, useMemo, useState } from "react";
 import { GetServerSideProps, GetServerSidePropsContext as Context } from "next";
 import { Socket, io } from "socket.io-client";
 import events from "../events.json";
@@ -30,6 +30,8 @@ const ChatPage = (props: Props) => {
 
 	const socketClient: Socket = useMemo(() => io(), []);
 
+	const messageBoxList: RefObject<HTMLUListElement> = createRef();
+
 	const [messages, setMessages] = useState<Message[]>(initialMessages);
 	const [users, setUsers] = useState<string[]>(initialUsers);
 
@@ -44,6 +46,10 @@ const ChatPage = (props: Props) => {
 			}
 		});
 	}, []);
+
+	useEffect(() => {
+		messageBoxList.current.scrollIntoView({ behavior: "smooth", block: "end" });
+	});
 
 	const onSubmitMessageForm: FormEventHandler = (event: FormEvent) => {
 		event.preventDefault();
@@ -71,7 +77,9 @@ const ChatPage = (props: Props) => {
 				<ul>{displayNames}</ul>
 			</div>
 
-			<ul className={ChatPageStyles.messageBoxList}>{messageBoxes}</ul>
+			<ul className={ChatPageStyles.messageBoxList} ref={messageBoxList}>
+				{messageBoxes}
+			</ul>
 
 			<form onSubmit={onSubmitMessageForm} className={ChatPageStyles.messageInput}>
 				<input type="text" name="message" id="message" required placeholder={t("chatpage:messageInput.placeholder")} />
