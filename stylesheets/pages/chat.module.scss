@@ -88,3 +88,29 @@
 		}
 	}
 }
+
+@media (max-width: constants.$dimens-mobile-treshold) {
+	.chatPage {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100%;
+		grid-template-columns: 100vw;
+		grid-template-rows: auto max-content;
+
+		.usersList {
+			display: none;
+		}
+
+		.messageBoxList {
+			grid-column: 1/2;
+			grid-row: 1/2;
+		}
+
+		.messageInput {
+			grid-column: 1/2;
+			grid-row: 2/3;
+		}
+	}
+}
