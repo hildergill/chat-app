@@ -16,13 +16,14 @@ export const createMessage = (author: string, content: string): Promise<Message>
 		});
 	});
 
-export const fetchLatestMessages = (includeDisplayName: boolean = false, limit: number = 20): Promise<Message[]> =>
+// TODO Implement a better MySQL query that has a start index and limit
+export const fetchLatestMessages = (includeDisplayName: boolean = false): Promise<Message[]> =>
 	new Promise<Message[]>(async (resolve, reject) => {
 		const queryString: string = includeDisplayName
-			? "select messages.*, users.display_name from messages join users on users.id = messages.author order by timestamp asc limit ?"
-			: "select * from messages order by timestamp asc limit ?";
+			? "select messages.*, users.display_name from messages join users on users.id = messages.author order by timestamp desc"
+			: "select * from messages order by timestamp desc";
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, limit, (error, results) => {
+		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, (error, results) => {
 			if (error) return reject(error);
 			const sanitizedMessagesArray: Message[] = results.map((message: any) => ({
 				id: message["id"],

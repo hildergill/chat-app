@@ -6,15 +6,9 @@ import Message from "../../models/message";
 const MessagesRoute: Router = Router();
 export default MessagesRoute;
 
-type FetchMessagesParams = {
-	limit: number;
-};
-
-MessagesRoute.get("/", async (request: Request<FetchMessagesParams>, response: Response) => {
-	const { limit } = request.params;
-
+MessagesRoute.get("/", async (request: Request, response: Response) => {
 	try {
-		const messages: Message[] = await fetchLatestMessages(true, limit);
+		const messages: Message[] = await fetchLatestMessages(true);
 		return response.status(200).send(messages);
 	} catch (error) {
 		console.error(error);

@@ -48,8 +48,8 @@ const ChatPage = (props: Props) => {
 	}, []);
 
 	useEffect(() => {
-		messageBoxList.current.scrollIntoView({ behavior: "smooth", block: "end" });
-	});
+		messageBoxList.current.scroll(0, messageBoxList.current.scrollHeight);
+	}, [messages]);
 
 	const onSubmitMessageForm: FormEventHandler = (event: FormEvent) => {
 		event.preventDefault();
@@ -78,7 +78,7 @@ const ChatPage = (props: Props) => {
 			</div>
 
 			<ul className={ChatPageStyles.messageBoxList} ref={messageBoxList}>
-				{messageBoxes}
+				{messageBoxes.reverse()}
 			</ul>
 
 			<form onSubmit={onSubmitMessageForm} className={ChatPageStyles.messageInput}>

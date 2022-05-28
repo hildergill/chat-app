@@ -35,6 +35,7 @@ UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 		const createdUser: User = await createUser(value),
 			createdUserToken: UserToken = await createUserToken(createdUser.id);
 
+		console.debug(createdUser, createdUserToken);
 		return response.status(201).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
 		if ((error as MysqlError).errno === 1062) {
@@ -59,6 +60,8 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 		if (!(await compare(value.password, fetchedUser.password))) return response.status(401).end();
 
 		const createdUserToken: UserToken = await createUserToken(fetchedUser.id);
+
+		console.debug(fetchedUser, createdUserToken);
 		return response.status(200).cookie(getUserTokenCookieName(), createdUserToken, getCookieOptions()).end();
 	} catch (error) {
 		if (error === 0) {
