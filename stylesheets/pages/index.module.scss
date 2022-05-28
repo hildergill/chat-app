@@ -90,6 +90,7 @@
 				border: none;
 				color: map-get(constants.$color-foreground, "dark");
 				border-radius: constants.$dimens-border-radius;
+				background-color: map-get(constants.$color-background, "dark");
 
 				&:focus {
 					color: map-get(constants.$color-foreground, "base");
