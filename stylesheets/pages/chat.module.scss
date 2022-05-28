@@ -30,13 +30,18 @@
 		padding: 0.5rem;
 
 		input {
-			padding: 0.3rem 0.5rem;
+			padding: 0.5rem;
 			font-size: 1rem;
 			font-family: "Roboto", sans-serif;
 
 			&[type="text"] {
 				flex: 1;
 			}
+		}
+
+		button[type="reset"],
+		button[type="submit"] {
+			aspect-ratio: 1/1;
 		}
 	}
 }
