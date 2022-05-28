@@ -115,3 +115,35 @@
 		}
 	}
 }
+
+@media (max-width: constants.$dimens-mobile-treshold) {
+	.indexPage {
+		width: 100vw;
+		justify-content: flex-start;
+		padding: 1rem;
+
+		.mainContainer {
+			width: 100%;
+
+			h1 {
+				text-align: center;
+			}
+
+			.userForm {
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+
+				input {
+					font-size: 1rem;
+					font-family: "Roboto", sans-serif;
+					padding: 0.3rem 0.5rem;
+
+					&[type="submit"] {
+						align-self: flex-end;
+					}
+				}
+			}
+		}
+	}
+}
