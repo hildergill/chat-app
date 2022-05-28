@@ -6,13 +6,13 @@ export const MessageBox = (props: Message) => {
 	const { displayName, timestamp, content } = props;
 
 	return (
-		<div className={MessageBoxStyle.messageBox}>
+		<li className={MessageBoxStyle.messageBox}>
 			<span className={MessageBoxStyle.infoSection}>
 				<strong>{displayName}</strong>
 				<code>{moment(timestamp).format("DD-MM-YYYY hh:mm:ss")}</code>
 			</span>
 
 			<p>{content}</p>
-		</div>
+		</li>
 	);
 };

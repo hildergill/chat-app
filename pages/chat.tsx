@@ -71,7 +71,7 @@ const ChatPage = (props: Props) => {
 				<ul>{displayNames}</ul>
 			</div>
 
-			<div className={ChatPageStyles.messageBoxList}>{messageBoxes}</div>
+			<ul className={ChatPageStyles.messageBoxList}>{messageBoxes}</ul>
 
 			<form onSubmit={onSubmitMessageForm} className={ChatPageStyles.messageInput}>
 				<input type="text" name="message" id="message" required placeholder={t("chatpage:messageInput.placeholder")} />
