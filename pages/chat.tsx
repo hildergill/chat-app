@@ -57,9 +57,9 @@ const ChatPage = (props: Props) => {
 			<div className={ChatPageStyles.messageBoxList}>{messageBoxes}</div>
 
 			<form onSubmit={onSubmitMessageForm} className={ChatPageStyles.messageInput}>
-				<label htmlFor="message">Message:</label>
 				<input type="text" name="message" id="message" required />
-				<input type="submit" value="Send Message" />
+				<input type="reset" value="Clear" />
+				<input type="submit" value="Send" />
 			</form>
 		</div>
 	);

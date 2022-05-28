@@ -24,6 +24,19 @@
 	.messageInput {
 		grid-column: 2/3;
 		grid-row: 2/3;
+		display: flex;
+		flex-direction: row;
 		border-top: 1px solid map-get(constants.$color-background, "dark");
+		padding: 0.5rem;
+
+		input {
+			padding: 0.3rem 0.5rem;
+			font-size: 1rem;
+			font-family: "Roboto", sans-serif;
+
+			&[type="text"] {
+				flex: 1;
+			}
+		}
 	}
 }
