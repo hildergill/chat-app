@@ -56,12 +56,12 @@ const ChatPage = (props: Props) => {
 	});
 
 	const displayNames: JSX.Element[] = users.map((displayName: string, key: number) => {
-		return <p key={key}>{displayName}</p>;
+		return <li key={key}>{displayName}</li>;
 	});
 
 	return (
 		<div className={ChatPageStyles.chatPage}>
-			<div className={ChatPageStyles.usersList}>{displayNames}</div>
+			<ul className={ChatPageStyles.usersList}>{displayNames}</ul>
 
 			<div className={ChatPageStyles.messageBoxList}>{messageBoxes}</div>
 
