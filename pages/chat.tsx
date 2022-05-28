@@ -9,6 +9,7 @@ import { verifyUserToken } from "../helpers/usertokens";
 import axios, { AxiosResponse } from "axios";
 import Message from "../models/message";
 import { fetchLatestMessages } from "../helpers/messages";
+import ChatPageStyles from "../stylesheets/pages/chat.module.scss";
 
 type Props = {
 	userToken: UserToken;
@@ -50,10 +51,12 @@ const ChatPage = (props: Props) => {
 	});
 
 	return (
-		<div>
-			<div>{messageBoxes}</div>
+		<div className={ChatPageStyles.chatPage}>
+			<div className={ChatPageStyles.usersList}>{/* TODO Add something here later */}</div>
 
-			<form onSubmit={onSubmitMessageForm}>
+			<div className={ChatPageStyles.messageBoxList}>{messageBoxes}</div>
+
+			<form onSubmit={onSubmitMessageForm} className={ChatPageStyles.messageInput}>
 				<label htmlFor="message">Message:</label>
 				<input type="text" name="message" id="message" required />
 				<input type="submit" value="Send Message" />
