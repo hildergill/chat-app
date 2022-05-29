@@ -1,3 +1,6 @@
+// This file is a part of chat-app (https://www.github.com/hildergill/chat-app)
+// Copyright 2022 Hilder Gill
+
 import DatabaseConnectionSingleton from "../backend/singletons/databaseconnection";
 import UserToken from "../models/usertoken";
 import { createHash } from "crypto";

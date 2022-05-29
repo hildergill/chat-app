@@ -1,3 +1,6 @@
+// This file is a part of chat-app (https://www.github.com/hildergill/chat-app)
+// Copyright 2022 Hilder Gill
+
 import { createRef, FormEvent, FormEventHandler, RefObject, useEffect, useMemo, useState } from "react";
 import { GetServerSideProps, GetServerSidePropsContext as Context } from "next";
 import { Socket, io } from "socket.io-client";

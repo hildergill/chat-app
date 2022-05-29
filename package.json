@@ -9,6 +9,7 @@
 	},
 	"repository": "https://www.github.com/hildergill/simple-chat-app",
 	"main": "backend/server.js",
+	"license": "Apache-2.0",
 	"scripts": {
 		"build:backend": "npx tsc -p config/backend.tsconfig.json",
 		"dev": "node scripts/dev.js",

@@ -1,3 +1,6 @@
+// This file is a part of chat-app (https://www.github.com/hildergill/chat-app)
+// Copyright 2022 Hilder Gill
+
 import express from "express";
 import { Express, Request, Response, Handler, json, urlencoded } from "express";
 import { Server as HttpServer, createServer as createHttpServer } from "http";
