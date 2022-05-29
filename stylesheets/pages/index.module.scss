@@ -1,0 +1,152 @@
+/* This file is a part of chat-app (https://www.github.com/hildergill/chat-app) */
+/* Copyright 2022 Hilder Gill */
+
+@use "../constants.scss";
+
+.indexPage {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: map-get(constants.$color-background, "dark");
+
+	.mainContainer {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		background-color: map-get(constants.$color-background, "base");
+		width: 40rem;
+		padding: 1rem;
+		box-shadow: constants.$preset-shadow;
+		border-radius: constants.$dimens-border-radius;
+
+		.tabSelector {
+			display: flex;
+			flex-direction: row;
+
+			button {
+				padding: 0.5rem 0;
+				flex: 1;
+				font-size: 1rem;
+				font-family: "Roboto", sans-serif;
+				background: none;
+				border: none;
+				box-shadow: inset constants.$preset-shadow;
+				cursor: pointer;
+
+				&:first-child {
+					border-top-left-radius: constants.$dimens-border-radius;
+					border-bottom-left-radius: constants.$dimens-border-radius;
+				}
+
+				&:last-child {
+					border-top-right-radius: constants.$dimens-border-radius;
+					border-bottom-right-radius: constants.$dimens-border-radius;
+				}
+			}
+
+			.active {
+				background-color: map-get(constants.$color-background, "dark");
+			}
+
+			.inactive {
+				box-shadow: none;
+				background-color: map-get(constants.$color-background, "base");
+				border-top: 1px solid map-get(constants.$color-background, "dark");
+				border-bottom: 1px solid map-get(constants.$color-background, "dark");
+
+				&:first-child {
+					border-left: 1px solid map-get(constants.$color-background, "dark");
+				}
+
+				&:last-child {
+					border-right: 1px solid map-get(constants.$color-background, "dark");
+				}
+
+				&:hover {
+					background-color: map-get(constants.$color-background, "light");
+				}
+			}
+		}
+
+		.userForm {
+			display: grid;
+			grid-template-columns: 10rem auto;
+			grid-auto-rows: 2rem;
+			gap: 1rem 0.5rem;
+
+			* {
+				font-size: 1rem;
+				font-family: "Roboto", sans-serif;
+			}
+
+			label {
+				margin: auto 0;
+			}
+
+			input {
+				grid-column: 2/3;
+				padding-left: 0.5rem;
+				padding-right: 0.5rem;
+				box-shadow: inset constants.$preset-shadow;
+				border: none;
+				color: map-get(constants.$color-foreground, "dark");
+				border-radius: constants.$dimens-border-radius;
+				background-color: map-get(constants.$color-background, "dark");
+
+				&:focus {
+					color: map-get(constants.$color-foreground, "base");
+				}
+
+				&[type="submit"] {
+					grid-row: 4/5;
+					justify-self: flex-end;
+					width: 8rem;
+					box-shadow: none;
+					border-radius: 100vh;
+					background-color: map-get(constants.$color-background, "base");
+					border: 1px solid map-get(constants.$color-background, "dark");
+					cursor: pointer;
+
+					&:hover {
+						background-color: map-get(constants.$color-background, "light");
+						color: map-get(constants.$color-foreground, "base");
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: constants.$dimens-mobile-treshold) {
+	.indexPage {
+		width: 100vw;
+		justify-content: flex-start;
+		padding: 1rem;
+
+		.mainContainer {
+			width: 100%;
+
+			h1 {
+				text-align: center;
+			}
+
+			.userForm {
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+
+				input {
+					font-size: 1rem;
+					font-family: "Roboto", sans-serif;
+					padding: 0.3rem 0.5rem;
+
+					&[type="submit"] {
+						align-self: flex-end;
+					}
+				}
+			}
+		}
+	}
+}

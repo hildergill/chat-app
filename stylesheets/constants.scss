@@ -1,0 +1,19 @@
+/* This file is a part of chat-app (https://www.github.com/hildergill/chat-app) */
+/* Copyright 2022 Hilder Gill */
+
+$color-background: (
+	shadow: hsl(220, 8%, 8%),
+	dark: hsl(220, 8%, 16%),
+	base: hsl(220, 8%, 24%),
+	light: hsl(220, 8%, 32%)
+);
+
+$color-foreground: (
+	dark: hsl(0, 0%, 80%),
+	base: hsl(0, 0%, 96%)
+);
+
+$preset-shadow: 0 0 2px map-get($color-background, "shadow");
+
+$dimens-mobile-treshold: 799px;
+$dimens-border-radius: 4px;

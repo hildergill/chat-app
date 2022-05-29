@@ -1,2 +1,13 @@
+# This file is a part of chat-app (https://www.github.com/hildergill/chat-app)
+# Copyright 2022 Hilder Gill
+
 node_modules/
 .next/
+
+backend/**/*.js
+helpers/**/*.js
+models/**/*.js
+validators/**/*.js
+
+*.rest
+*.http

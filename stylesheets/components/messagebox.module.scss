@@ -1,0 +1,36 @@
+/* This file is a part of chat-app (https://www.github.com/hildergill/chat-app) */
+/* Copyright 2022 Hilder Gill */
+
+@use "../constants.scss";
+
+.messageBox {
+	padding: 1rem;
+	background-color: map-get(constants.$color-background, "base");
+	box-shadow: constants.$preset-shadow;
+
+	* {
+		font-size: 1rem;
+	}
+
+	.infoSection {
+		display: flex;
+		flex-direction: row;
+
+		* {
+			color: map-get(constants.$color-foreground, "dark");
+		}
+
+		strong {
+			font-family: "Roboto", sans-serif;
+			flex: 1;
+		}
+
+		code {
+			font-family: "Roboto Mono", monospace;
+		}
+	}
+
+	p {
+		margin-top: 0.5rem;
+	}
+}
