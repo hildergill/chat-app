@@ -7,3 +7,14 @@
 ## About Chat App
 
 A real-time chat app
+
+## Getting Started
+
+```
+$ yarn build
+$ yarn start
+```
+
+## License
+
+Chat App is licensed under the [Apache 2.0](license) license
