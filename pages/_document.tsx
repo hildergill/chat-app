@@ -22,7 +22,7 @@ const CustomDocument = () => {
 				<meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png" />
 				<meta name="theme-color" content="#383c42" />
 			</Head>
-			
+
 			<body>
 				<Main />
 				<NextScript />
