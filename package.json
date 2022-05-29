@@ -11,6 +11,8 @@
 	"main": "backend/server.js",
 	"license": "Apache-2.0",
 	"scripts": {
+		"build": "npm run build:backend && npm run build:frontend",
+		"build:frontend": "npx next build",
 		"build:backend": "npx tsc -p config/backend.tsconfig.json",
 		"dev": "node scripts/dev.js",
 		"format": "npx prettier --write .",
