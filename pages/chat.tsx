@@ -19,6 +19,8 @@ import { fetchUsers } from "../helpers/users";
 import User from "../models/user";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import head from "next/head";
+import Head from "next/head";
 
 type Props = {
 	userToken: UserToken;
@@ -74,28 +76,34 @@ const ChatPage = (props: Props) => {
 	});
 
 	return (
-		<div className={ChatPageStyles.chatPage}>
-			<div className={ChatPageStyles.usersList}>
-				<h3>{t("chatpage:usersSection")}</h3>
-				<ul>{displayNames}</ul>
+		<>
+			<Head>
+				<title>{t("common:appTitle")}</title>
+			</Head>
+
+			<div className={ChatPageStyles.chatPage}>
+				<div className={ChatPageStyles.usersList}>
+					<h3>{t("chatpage:usersSection")}</h3>
+					<ul>{displayNames}</ul>
+				</div>
+
+				<ul className={ChatPageStyles.messageBoxList} ref={messageBoxList}>
+					{messageBoxes.reverse()}
+				</ul>
+
+				<form onSubmit={onSubmitMessageForm} className={ChatPageStyles.messageInput}>
+					<input type="text" name="message" id="message" required placeholder={t("chatpage:messageInput.placeholder")} />
+
+					<button type="reset" title={t("chatpage:resetButton.title")}>
+						<IconTrash />
+					</button>
+
+					<button type="submit" title={t("chatpage:sendButton.title")}>
+						<IconSend />
+					</button>
+				</form>
 			</div>
-
-			<ul className={ChatPageStyles.messageBoxList} ref={messageBoxList}>
-				{messageBoxes.reverse()}
-			</ul>
-
-			<form onSubmit={onSubmitMessageForm} className={ChatPageStyles.messageInput}>
-				<input type="text" name="message" id="message" required placeholder={t("chatpage:messageInput.placeholder")} />
-
-				<button type="reset" title={t("chatpage:resetButton.title")}>
-					<IconTrash />
-				</button>
-
-				<button type="submit" title={t("chatpage:sendButton.title")}>
-					<IconSend />
-				</button>
-			</form>
-		</div>
+		</>
 	);
 };
 

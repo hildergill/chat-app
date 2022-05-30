@@ -10,6 +10,7 @@ import Error from "../models/error";
 import { getDisplayNameMaxLength, getPasswordMinLength } from "../validators/uservalidators";
 import { ErrorBox } from "../components/ErrorBox";
 import IndexPageStyle from "../stylesheets/pages/index.module.scss";
+import Head from "next/head";
 
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
@@ -46,50 +47,56 @@ const IndexPage = () => {
 	};
 
 	return (
-		<div className={IndexPageStyle.indexPage}>
-			<main className={IndexPageStyle.mainContainer}>
-				<h1>{isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}</h1>
+		<>
+			<Head>
+				<title>{isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}</title>
+			</Head>
 
-				<div className={IndexPageStyle.tabSelector}>
-					<button className={isSignUp ? IndexPageStyle.active : IndexPageStyle.inactive} onClick={() => setSignUp(true)}>
-						{t("indexpage:modeTitles.signUp")}
-					</button>
+			<div className={IndexPageStyle.indexPage}>
+				<main className={IndexPageStyle.mainContainer}>
+					<h1>{isSignUp ? t("indexpage:pageTitle.signUp") : t("indexpage:pageTitle.logIn")}</h1>
 
-					<button className={isSignUp ? IndexPageStyle.inactive : IndexPageStyle.active} onClick={() => setSignUp(false)}>
-						{t("indexpage:modeTitles.logIn")}
-					</button>
-				</div>
+					<div className={IndexPageStyle.tabSelector}>
+						<button className={isSignUp ? IndexPageStyle.active : IndexPageStyle.inactive} onClick={() => setSignUp(true)}>
+							{t("indexpage:modeTitles.signUp")}
+						</button>
 
-				<form onSubmit={onSubmitMainForm} className={IndexPageStyle.userForm}>
-					{isSignUp ? (
-						<>
-							<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>
-							<input type="text" name="displayName" id="displayName" required maxLength={getDisplayNameMaxLength()} />
+						<button className={isSignUp ? IndexPageStyle.inactive : IndexPageStyle.active} onClick={() => setSignUp(false)}>
+							{t("indexpage:modeTitles.logIn")}
+						</button>
+					</div>
 
-							<label htmlFor="password">{t("indexpage:inputs.password")}</label>
-							<input type="password" name="password" id="password" required minLength={getPasswordMinLength()} />
+					<form onSubmit={onSubmitMainForm} className={IndexPageStyle.userForm}>
+						{isSignUp ? (
+							<>
+								<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>
+								<input type="text" name="displayName" id="displayName" required maxLength={getDisplayNameMaxLength()} />
 
-							<label htmlFor="confirmPassword">{t("indexpage:inputs.confirmPassword")}</label>
-							<input type="password" name="confirmPassword" id="confirmPassword" required minLength={getPasswordMinLength()} />
+								<label htmlFor="password">{t("indexpage:inputs.password")}</label>
+								<input type="password" name="password" id="password" required minLength={getPasswordMinLength()} />
 
-							<input type="submit" value={t("indexpage:modeTitles.signUp")} />
-						</>
-					) : (
-						<>
-							<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>
-							<input type="text" name="displayName" id="displayName" required maxLength={getDisplayNameMaxLength()} />
+								<label htmlFor="confirmPassword">{t("indexpage:inputs.confirmPassword")}</label>
+								<input type="password" name="confirmPassword" id="confirmPassword" required minLength={getPasswordMinLength()} />
 
-							<label htmlFor="password">{t("indexpage:inputs.password")}</label>
-							<input type="password" name="password" id="password" required minLength={getPasswordMinLength()} />
+								<input type="submit" value={t("indexpage:modeTitles.signUp")} />
+							</>
+						) : (
+							<>
+								<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>
+								<input type="text" name="displayName" id="displayName" required maxLength={getDisplayNameMaxLength()} />
 
-							<input type="submit" value={t("indexpage:modeTitles.logIn")} />
-						</>
-					)}
-				</form>
+								<label htmlFor="password">{t("indexpage:inputs.password")}</label>
+								<input type="password" name="password" id="password" required minLength={getPasswordMinLength()} />
 
-				{errors && getErrorBoxes()}
-			</main>
-		</div>
+								<input type="submit" value={t("indexpage:modeTitles.logIn")} />
+							</>
+						)}
+					</form>
+
+					{errors && getErrorBoxes()}
+				</main>
+			</div>
+		</>
 	);
 };
 
