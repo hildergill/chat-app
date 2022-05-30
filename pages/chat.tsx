@@ -19,7 +19,6 @@ import { fetchUsers } from "../helpers/users";
 import User from "../models/user";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import head from "next/head";
 import Head from "next/head";
 
 type Props = {
