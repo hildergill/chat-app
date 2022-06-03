@@ -17,6 +17,10 @@ class App {
 		this.databaseConnection = createConnection(connectionConfig);
 	}
 
+	public get DatabaseConnection(): Connection {
+		return this.databaseConnection;
+	}
+
 	public static get Instance(): App {
 		return this.instance || (this.instance = new App());
 	}
