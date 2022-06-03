@@ -3,6 +3,8 @@ import express, { Express, Request, Response, json, urlencoded } from "express";
 import { Server as HttpServer, createServer as createHttpServer } from "http";
 import createNextServer, { NextServer, NextServerOptions } from "next/dist/server/next";
 import { resolve } from "path";
+import { Server as SocketServer } from "socket.io";
+import SocketHandler from "./sockethandler";
 
 class App {
 	private static instance: App;
@@ -12,6 +14,7 @@ class App {
 	private expressServer: Express;
 	private httpServer: HttpServer;
 	private nextServer: NextServer;
+	private socketServer: SocketServer;
 
 	constructor() {
 		const { DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD } = process.env,
@@ -34,6 +37,7 @@ class App {
 		this.expressServer = express();
 		this.httpServer = createHttpServer(this.expressServer);
 		this.nextServer = createNextServer(serverConfig);
+		this.socketServer = new SocketServer(this.httpServer);
 	}
 
 	public runApp(): void {
@@ -41,6 +45,8 @@ class App {
 			port: number = Number(BACKEND_PORT);
 
 		const requestHandler = this.nextServer.getRequestHandler();
+
+		this.socketServer.on("connect", SocketHandler);
 
 		this.nextServer.prepare().then(() => {
 			this.expressServer.use(json(), urlencoded({ extended: false }));
@@ -59,6 +65,10 @@ class App {
 
 	public get DatabaseConnection(): Connection {
 		return this.databaseConnection;
+	}
+
+	public get SocketServer(): SocketServer {
+		return this.socketServer;
 	}
 
 	public static get Instance(): App {
