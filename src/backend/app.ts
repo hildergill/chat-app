@@ -4,7 +4,7 @@ import { Server as HttpServer, createServer as createHttpServer } from "http";
 import createNextServer, { NextServer, NextServerOptions } from "next/dist/server/next";
 import { resolve } from "path";
 import { Server as SocketServer } from "socket.io";
-import SocketHandler from "./sockethandler";
+import SocketHandler from "./servereventshandler";
 
 class App {
 	private static instance: App;
