@@ -13,10 +13,12 @@ export const createMessage = (author: string, content: string): Promise<void> =>
 
 export const fetchLatestMessages = (start: number = 0, limit: number = 20): Promise<Message[]> =>
 	new Promise<Message[]>((resolve, reject) => {
-		const queryString: string = "select id, author, content, timestamp from messages order by timestamp_data desc limit ?, ?",
+		const queryString: string = "select id, author, content, timestamp from messages order by timestamp_data asc limit ?, ?",
 			queryParams = [start, limit];
 
 		App.DatabaseConnection.query(queryString, queryParams, (error, results: any[]) => {
+			if (error) return reject(error);
+
 			const messages: Message[] = results.map((result: any) => {
 				const tempMessageObject: Message = {
 					id: result["id"],

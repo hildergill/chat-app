@@ -26,9 +26,11 @@ export const MessageList = (props: MessageListProps) => {
 
 	const [messages, setMessages] = useState<JSX.Element[]>(convertToMessageBox(initialMessages));
 
-	useEffect(()=>{
-		socketClient.on(Events.message, ()=>{})
-	},[]);
+	useEffect(() => {
+		socketClient.on(Events.message, (...messages: Message[]) => {
+			setMessages(convertToMessageBox(messages));
+		});
+	}, []);
 
 	return <div>{messages}</div>;
 };
