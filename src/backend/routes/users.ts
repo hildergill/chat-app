@@ -5,6 +5,7 @@ import User from "../../models/user";
 import UserToken from "../../models/usertoken";
 import { UserSignUpValidator, UserLogInValidator } from "../../validators/uservalidators";
 import { getCookieName, getCookieOptions } from "../../helpers/cookie";
+import { compare } from "bcrypt";
 
 const UsersRoute: Router = Router();
 export default UsersRoute;
@@ -19,6 +20,23 @@ UsersRoute.post("/signup/", async (req: Request, res: Response) => {
 		const user: User = await fetchUserByDisplayName(value.displayName),
 			userToken: UserToken = await createUserToken(user.displayName);
 
+		return res.status(201).cookie(getCookieName(), userToken, getCookieOptions()).end();
+	} catch (error) {
+		console.error(error);
+		return res.status(500).end();
+	}
+});
+
+UsersRoute.post("/login/", async (req: Request, res: Response) => {
+	const { error, value } = UserLogInValidator.validate(req.body, { abortEarly: false });
+	if (error) return res.status(400).end();
+
+	try {
+		const user: User = await fetchUserByDisplayName(value.displayName);
+
+		if (!(await compare(value.password, user.password))) return res.status(401).end();
+
+		const userToken: UserToken = await createUserToken(user.displayName);
 		return res.status(201).cookie(getCookieName(), userToken, getCookieOptions()).end();
 	} catch (error) {
 		console.error(error);
