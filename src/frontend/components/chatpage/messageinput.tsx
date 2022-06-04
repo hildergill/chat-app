@@ -1,9 +1,9 @@
 import { FormEventHandler, FormEvent, useContext } from "react";
-import { ChatPageContext } from "../../pages/chat";
+import { ChatPageContextType, ChatPageContext } from "../../pages/chat";
 import Events from "../../../../events.json";
 
 export const MessageInput = () => {
-	const chatPageContext = useContext(ChatPageContext);
+	const chatPageContext: ChatPageContextType = useContext(ChatPageContext);
 
 	const onSubmitMessageForm: FormEventHandler = (event: FormEvent) => {
 		event.preventDefault();
