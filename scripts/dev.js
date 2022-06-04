@@ -10,6 +10,7 @@ nodemon({
 		DATABASE_USERNAME: "chat_app",
 		DATABASE_PASSWORD: "123456",
 
-		BACKEND_PORT: 3000
+		BACKEND_PORT: 3000,
+		BACKEND_SECRET: "chat-app"
 	}
 });

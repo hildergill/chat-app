@@ -7,7 +7,7 @@ export const createUserToken = (user: string): Promise<UserToken> =>
 		const token: string = createHash("SHA256").update(Date.now().toString()).digest("hex"),
 			queryString: string = "insert into user_tokens values (?, ?)";
 
-		App.DatabaseConnection.query(queryString, [user, token], (error) => {
+		App.DatabaseConnection.query(queryString, [token, user], (error) => {
 			if (error) return reject(error);
 			return resolve({ user, token });
 		});

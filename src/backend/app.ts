@@ -5,6 +5,8 @@ import createNextServer, { NextServer, NextServerOptions } from "next/dist/serve
 import { resolve } from "path";
 import { Server as SocketServer } from "socket.io";
 import EventsHandler from "./eventshandler";
+import UsersRoute from "./routes/users";
+import CookieParser from "cookie-parser";
 
 class App {
 	private static instance: App;
@@ -50,8 +52,11 @@ class App {
 
 		this.nextServer.prepare().then(() => {
 			this.expressServer.use(json(), urlencoded({ extended: false }));
+			this.expressServer.use(CookieParser(process.env.BACKEND_SECRET));
 
 			// TODO Add something here later
+
+			this.expressServer.use("/api/users/", UsersRoute);
 
 			this.expressServer.all("*", (req: Request, res: Response) => {
 				return requestHandler(req, res);

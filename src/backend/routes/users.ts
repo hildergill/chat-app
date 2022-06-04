@@ -1,4 +1,4 @@
-import { Router, Request, Response, response } from "express";
+import { Router, Request, Response } from "express";
 import { createUser, fetchUserByDisplayName } from "../../helpers/users";
 import { createUserToken } from "../../helpers/usertokens";
 import User from "../../models/user";
@@ -19,7 +19,7 @@ UsersRoute.post("/signup/", async (req: Request, res: Response) => {
 		const user: User = await fetchUserByDisplayName(value.displayName),
 			userToken: UserToken = await createUserToken(user.displayName);
 
-		return response.status(201).cookie(getCookieName(), userToken, getCookieOptions()).end();
+		return res.status(201).cookie(getCookieName(), userToken, getCookieOptions()).end();
 	} catch (error) {
 		console.error(error);
 		return res.status(500).end();
