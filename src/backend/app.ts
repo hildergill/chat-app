@@ -4,7 +4,7 @@ import { Server as HttpServer, createServer as createHttpServer } from "http";
 import createNextServer, { NextServer, NextServerOptions } from "next/dist/server/next";
 import { resolve } from "path";
 import { Server as SocketServer } from "socket.io";
-import SocketHandler from "./servereventshandler";
+import EventsHandler from "./eventshandler";
 
 class App {
 	private static instance: App;
@@ -46,7 +46,7 @@ class App {
 
 		const requestHandler = this.nextServer.getRequestHandler();
 
-		this.socketServer.on("connect", SocketHandler);
+		this.socketServer.on("connect", EventsHandler);
 
 		this.nextServer.prepare().then(() => {
 			this.expressServer.use(json(), urlencoded({ extended: false }));
