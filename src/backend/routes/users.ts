@@ -35,7 +35,9 @@ UsersRoute.post("/login/", async (req: Request, res: Response) => {
 	try {
 		const user: User = await fetchUserByDisplayName(value.displayName);
 
-		if (!(await compare(value.password, user.password))) return res.status(401).end();
+		if (!(await compare(value.password, user.password))) {
+			return res.status(401).json(["errors:inputs.password.invalid"]).end();
+		}
 
 		const userToken: UserToken = await createUserToken(user.displayName);
 		return res.status(201).cookie(getCookieName(), userToken, getCookieOptions()).end();
