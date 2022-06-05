@@ -34,6 +34,11 @@ export const createUser = (displayName: string, unhashedPassword: string, isAdmi
 		App.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) {
 				console.error(error);
+
+				if (error.errno === 1062) {
+					return reject("errors:inputs.displayName.taken");
+				}
+
 				return reject("errors:internalServerError");
 			}
 
