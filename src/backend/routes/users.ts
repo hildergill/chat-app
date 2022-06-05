@@ -24,7 +24,7 @@ UsersRoute.post("/signup/", async (req: Request, res: Response) => {
 		return res.status(201).cookie(getCookieName(), userToken, getCookieOptions()).end();
 	} catch (error) {
 		console.error(error);
-		return res.status(500).end();
+		return res.status(500).json([error]).end();
 	}
 });
 
@@ -43,6 +43,6 @@ UsersRoute.post("/login/", async (req: Request, res: Response) => {
 		return res.status(201).cookie(getCookieName(), userToken, getCookieOptions()).end();
 	} catch (error) {
 		console.error(error);
-		return res.status(500).end();
+		return res.status(500).json([error]).end();
 	}
 });

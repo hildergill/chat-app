@@ -7,8 +7,14 @@ export const fetchUserByDisplayName = (displayName: string): Promise<User> =>
 		const queryString: string = "select * from users where display_name = ?";
 
 		App.DatabaseConnection.query(queryString, displayName, (error, results: any[]) => {
-			if (error) return reject(error);
-			if (results.length !== 1) return reject(0);
+			if (error) {
+				console.error(error);
+				return reject("errors:internalServerError");
+			}
+
+			if (results.length !== 1) {
+				return reject("errors:inputs.displayName.notExists");
+			}
 
 			const [result] = results;
 			return resolve({
@@ -26,7 +32,11 @@ export const createUser = (displayName: string, unhashedPassword: string, isAdmi
 			queryParams = [displayName, password, isAdmin ? 1 : 0];
 
 		App.DatabaseConnection.query(queryString, queryParams, (error) => {
-			if (error) return reject(error);
+			if (error) {
+				console.error(error);
+				return reject("errors:internalServerError");
+			}
+
 			return resolve({ displayName, password, isAdmin });
 		});
 	});

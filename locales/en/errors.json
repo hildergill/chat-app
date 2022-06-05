@@ -5,6 +5,7 @@
 		"displayName": {
 			"max": "Your display name must not be longer than {{displayNameMax}} characters long",
 			"alphanum": "Your display name must only contain alphanumeric characters",
+			"notExists": "The user associated with the display name does not exists",
 			"taken": "Your display name was taken"
 		},
 		"password": {
