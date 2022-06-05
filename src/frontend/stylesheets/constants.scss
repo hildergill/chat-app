@@ -1,0 +1,13 @@
+$colors-background: (
+	shadow: hsl(220, 8%, 8%),
+	dark: hsl(220, 8%, 16%),
+	base: hsl(220, 8%, 24%),
+	light: hsl(220, 8%, 32%)
+);
+
+$colors-foreground: (
+	dark: hsl(0, 0%, 88%),
+	base: hsl(0, 0%, 96%)
+);
+
+$dimens-mobile-treshold: 800px;
