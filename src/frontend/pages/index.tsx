@@ -38,8 +38,8 @@ const IndexPage = () => {
 	return (
 		<UserDialog title={pageTitle}>
 			<div>
-				<button>{t("indexpage:modes.signUp")}</button>
-				<button>{t("indexpage:modes.logIn")}</button>
+				<button onClick={() => setSignUp(true)}>{t("indexpage:modes.signUp")}</button>
+				<button onClick={() => setSignUp(false)}>{t("indexpage:modes.logIn")}</button>
 			</div>
 
 			<form onSubmit={onSubmitMainForm}>
