@@ -11,22 +11,22 @@ const IndexPage = () => {
 
 	const { t } = useTranslation();
 
-	const pageTitle: string = t(isSignUp ? "indexpage:pageTitles.signUp" : "indexpage:pageTitles.logIn");
+	const pageTitle: string = t(isSignUp ? "indexpage:pageTitles.signUp" : "indexpage:pageTitles.logIn"),
+		submitButtonText: string = t(isSignUp ? "indexpage:modes.signUp" : "indexpage:modes.logIn"),
+		requestUri: string = isSignUp ? "/api/users/signup/" : "/api/users/login/";
 
 	const onSubmitMainForm: FormEventHandler = async (event: FormEvent) => {
 		event.preventDefault();
 
 		const { displayName, password, confirmPassword }: any = event.target,
-			paramsObject = {};
+			requestParams = {};
 
-		paramsObject["displayName"] = displayName.value;
-		paramsObject["password"] = password.value;
-		if (confirmPassword === null) paramsObject["confirmPassword"] = confirmPassword.value;
-
-		const requestUri: string = isSignUp ? "/api/users/signup/" : "/api/users/login/";
+		requestParams["displayName"] = displayName.value;
+		requestParams["password"] = password.value;
+		if (confirmPassword === null) requestParams["confirmPassword"] = confirmPassword.value;
 
 		try {
-			await axios.post(requestUri, paramsObject);
+			await axios.post(requestUri, requestParams);
 			location.assign("/chat/");
 		} catch (error) {
 			// TODO Add the error handling stuff here later
@@ -53,8 +53,6 @@ const IndexPage = () => {
 
 						<label htmlFor="confirmPassword">{t("indexpage:inputs.confirmPassword")}</label>
 						<input type="password" name="confirmPassword" id="confirmPassword" minLength={PasswordMinLength} required />
-
-						<input type="submit" value={t("indexpage:modes.signUp")} />
 					</>
 				) : (
 					<>
@@ -63,10 +61,10 @@ const IndexPage = () => {
 
 						<label htmlFor="password">{t("indexpage:inputs.password")}</label>
 						<input type="password" name="password" id="password" minLength={PasswordMinLength} required />
-
-						<input type="submit" value={t("indexpage:modes.logIn")} />
 					</>
 				)}
+
+				<input type="submit" value={t(submitButtonText)} />
 			</form>
 		</UserDialog>
 	);
