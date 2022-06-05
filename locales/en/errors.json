@@ -1,0 +1,14 @@
+{
+	"internalServerError": "Internal server error",
+	"inputs": {
+		"required": "All required inputs must not be empty",
+		"displayName": {
+			"max": "Your display name must not be longer than {{displayNameMax}} characters long",
+			"alphanum": "Your display name must only contain alphanumeric characters"
+		},
+		"password": {
+			"min": "Your password must not be shorter than {{passwordMin}} characters long",
+			"mismatch": "Your password and password confirm must match"
+		}
+	}
+}
