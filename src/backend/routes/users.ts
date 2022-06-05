@@ -6,13 +6,14 @@ import UserToken from "../../models/usertoken";
 import { UserSignUpValidator, UserLogInValidator } from "../../validators/uservalidators";
 import { getCookieName, getCookieOptions } from "../../helpers/cookie";
 import { compare } from "bcrypt";
+import { convertErrors } from "../../helpers/errors";
 
 const UsersRoute: Router = Router();
 export default UsersRoute;
 
 UsersRoute.post("/signup/", async (req: Request, res: Response) => {
 	const { error, value } = UserSignUpValidator.validate(req.body, { abortEarly: false });
-	if (error) return res.status(400).end();
+	if (error) return res.json(convertErrors(error.details)).status(400).end();
 
 	await createUser(value.displayName, value.password, value.isAdmin);
 
@@ -29,7 +30,7 @@ UsersRoute.post("/signup/", async (req: Request, res: Response) => {
 
 UsersRoute.post("/login/", async (req: Request, res: Response) => {
 	const { error, value } = UserLogInValidator.validate(req.body, { abortEarly: false });
-	if (error) return res.status(400).end();
+	if (error) return res.json(convertErrors(error.details)).status(400).end();
 
 	try {
 		const user: User = await fetchUserByDisplayName(value.displayName);
