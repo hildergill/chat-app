@@ -4,10 +4,11 @@ import { useTranslation } from "next-i18next";
 import { UserDialog } from "../components/userdialog";
 import { FormEvent, FormEventHandler, useState } from "react";
 import { DisplayNameMaxLength, PasswordMinLength } from "../../validators/uservalidators";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
+	const [errors, setErrors] = useState<string[]>([]);
 
 	const { t } = useTranslation();
 
@@ -29,14 +30,15 @@ const IndexPage = () => {
 			await axios.post(requestUri, requestParams);
 			location.assign("/chat/");
 		} catch (error) {
-			// TODO Add the error handling stuff here later
+			const { response }: AxiosError<string[]> = error,
+				tempErrors: string[] = response.data.map((error: string) => t(error));
 
-			console.error(error);
+			setErrors(tempErrors);
 		}
 	};
 
 	return (
-		<UserDialog title={pageTitle}>
+		<UserDialog title={pageTitle} errors={errors}>
 			<div>
 				<button onClick={() => setSignUp(true)}>{t("indexpage:modes.signUp")}</button>
 				<button onClick={() => setSignUp(false)}>{t("indexpage:modes.logIn")}</button>
