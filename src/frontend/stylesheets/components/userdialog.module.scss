@@ -1,0 +1,24 @@
+@use "../constants.scss";
+
+.userDialog {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: map-get(constants.$colors-background, "dark");
+	padding: 1rem;
+
+	& > .mainContainer {
+		width: 40rem;
+		min-width: 20rem;
+		background-color: map-get(constants.$colors-background, "base");
+		padding: 1rem;
+		border-radius: constants.$dimens-border-radius;
+		box-shadow: constants.$presets-shadow;
+
+		& > h1 {
+			margin-bottom: 1rem;
+			text-align: center;
+		}
+	}
+}

@@ -11,3 +11,6 @@ $colors-foreground: (
 );
 
 $dimens-mobile-treshold: 800px;
+$dimens-border-radius: 4px;
+
+$presets-shadow: 0 0 $dimens-border-radius map-get($colors-background, "shadow");
