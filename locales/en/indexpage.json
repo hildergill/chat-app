@@ -6,5 +6,10 @@
 	"modes": {
 		"signUp": "Sign Up",
 		"logIn": "Log In"
+	},
+	"inputs": {
+		"displayName": "Display name",
+		"password": "Password",
+		"confirmPassword": "Confirm password"
 	}
 }
