@@ -41,7 +41,7 @@ const IndexPage = () => {
 
 	return (
 		<UserDialog title={pageTitle} errors={errors}>
-			<div>
+			<div className={IndexStyles.modeSwitcher}>
 				<button onClick={() => setSignUp(true)}>{t("indexpage:modes.signUp")}</button>
 				<button onClick={() => setSignUp(false)}>{t("indexpage:modes.logIn")}</button>
 			</div>
