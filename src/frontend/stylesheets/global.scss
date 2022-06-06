@@ -1,3 +1,5 @@
+@use "./constants.scss";
+
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap");
 
@@ -10,4 +12,17 @@
 :root {
 	font-family: "Roboto", sans-serif;
 	color-scheme: dark;
+}
+
+input {
+	padding: 0.2rem 0.5rem;
+	font-size: 1rem;
+	color: map-get(constants.$colors-foreground, "dark");
+	font-family: "Roboto", sans-serif;
+	border-radius: constants.$dimens-border-radius;
+	border: 1px solid map-get(constants.$colors-background, "shadow");
+
+	&:focus {
+		color: map-get(constants.$colors-foreground, "base");
+	}
 }
