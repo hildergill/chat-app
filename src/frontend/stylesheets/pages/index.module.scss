@@ -1,3 +1,5 @@
+@use "../constants.scss";
+
 .mainForm {
 	display: grid;
 	grid-template-columns: 10rem auto;
@@ -20,6 +22,18 @@
 			grid-row: 4/5;
 			justify-self: flex-end;
 			width: 8rem;
+		}
+	}
+}
+
+@media (max-width: constants.$dimens-mobile-treshold) {
+	.mainForm {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		input[type="submit"] {
+			align-self: flex-end;
 		}
 	}
 }
