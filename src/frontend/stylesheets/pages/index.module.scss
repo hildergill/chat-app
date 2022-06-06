@@ -43,12 +43,15 @@
 		&.active {
 			background-color: map-get(constants.$colors-background, "dark");
 			box-shadow: inset constants.$presets-shadow;
+			color: map-get(constants.$colors-foreground, "dark");
+			text-shadow: constants.$presets-shadow;
 		}
 
 		&.inactive {
 			background-color: map-get(constants.$colors-background, "base");
 			border-top-color: map-get(constants.$colors-background, "dark");
 			border-bottom-color: map-get(constants.$colors-background, "dark");
+			color: map-get(constants.$colors-foreground, "base");
 
 			&:first-child {
 				border-left-color: map-get(constants.$colors-background, "dark");

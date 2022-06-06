@@ -27,6 +27,16 @@ input {
 	&:focus {
 		color: map-get(constants.$colors-foreground, "base");
 	}
+
+	&[type="submit"] {
+		background-color: map-get(constants.$colors-background, "base");
+		border: 1px solid map-get(constants.$colors-background, "dark");
+		cursor: pointer;
+
+		&:hover {
+			background-color: map-get(constants.$colors-background, "light");
+		}
+	}
 }
 
 label {
