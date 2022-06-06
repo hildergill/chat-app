@@ -8,8 +8,9 @@
 		"logIn": "Log In"
 	},
 	"inputs": {
-		"displayName": "Display name",
-		"password": "Password",
-		"confirmPassword": "Confirm password"
+		"displayName": "Display name *",
+		"password": "Password *",
+		"confirmPassword": "Confirm password *",
+		"required": "* Required"
 	}
 }

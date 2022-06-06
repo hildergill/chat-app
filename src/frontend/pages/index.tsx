@@ -66,6 +66,7 @@ const IndexPage = () => {
 					</>
 				)}
 
+				<p>{t("indexpage:inputs.required")}</p>
 				<input type="submit" value={t(submitButtonText)} />
 			</form>
 		</UserDialog>
