@@ -6,6 +6,8 @@ import { FormEvent, FormEventHandler, useState } from "react";
 import { DisplayNameMaxLength, PasswordMinLength } from "../../validators/uservalidators";
 import axios, { AxiosError } from "axios";
 
+import IndexStyles from "../stylesheets/pages/index.module.scss";
+
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
 	const [errors, setErrors] = useState<string[]>([]);
@@ -44,7 +46,7 @@ const IndexPage = () => {
 				<button onClick={() => setSignUp(false)}>{t("indexpage:modes.logIn")}</button>
 			</div>
 
-			<form onSubmit={onSubmitMainForm}>
+			<form onSubmit={onSubmitMainForm} className={IndexStyles.mainForm}>
 				{isSignUp ? (
 					<>
 						<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>

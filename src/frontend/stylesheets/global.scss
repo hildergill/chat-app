@@ -15,7 +15,9 @@
 }
 
 input {
-	padding: 0.2rem 0.5rem;
+	height: 2rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 	font-size: 1rem;
 	color: map-get(constants.$colors-foreground, "dark");
 	font-family: "Roboto", sans-serif;
