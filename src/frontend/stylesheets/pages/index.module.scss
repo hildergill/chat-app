@@ -36,28 +36,30 @@
 		padding: 0.5rem 0;
 		font-size: 1rem;
 		font-family: "Roboto", sans-serif;
-		cursor: pointer;border:none;
-border:1px solid transparent;
+		cursor: pointer;
+		border: none;
+		border: 1px solid transparent;
 
-		&.active {background-color: map-get(constants.$colors-background,"dark");
-			box-shadow: inset constants.$presets-shadow ;
+		&.active {
+			background-color: map-get(constants.$colors-background, "dark");
+			box-shadow: inset constants.$presets-shadow;
 		}
 
 		&.inactive {
-			background-color: map-get(constants.$colors-background,"base") ;
-			border-top-color: map-get(constants.$colors-background,"dark");
-			border-bottom-color: map-get(constants.$colors-background,"dark");
+			background-color: map-get(constants.$colors-background, "base");
+			border-top-color: map-get(constants.$colors-background, "dark");
+			border-bottom-color: map-get(constants.$colors-background, "dark");
 
 			&:first-child {
-				border-left-color: map-get(constants.$colors-background,"dark");
+				border-left-color: map-get(constants.$colors-background, "dark");
 			}
 
 			&:last-child {
-				border-right-color: map-get(constants.$colors-background,"dark");
+				border-right-color: map-get(constants.$colors-background, "dark");
 			}
 
 			&:hover {
-				background-color: map-get(constants.$colors-background,"light");
+				background-color: map-get(constants.$colors-background, "light");
 			}
 		}
 
