@@ -26,3 +26,9 @@ input {
 		color: map-get(constants.$colors-foreground, "base");
 	}
 }
+
+label {
+	font-family: "Roboto", sans-serif;
+	font-size: 1rem;
+	margin: auto 0;
+}
