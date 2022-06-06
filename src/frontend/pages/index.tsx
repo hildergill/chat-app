@@ -18,6 +18,9 @@ const IndexPage = () => {
 		submitButtonText: string = t(isSignUp ? "indexpage:modes.signUp" : "indexpage:modes.logIn"),
 		requestUri: string = isSignUp ? "/api/users/signup/" : "/api/users/login/";
 
+	const signUpModeButtonStyle: string = isSignUp ? IndexStyles.active : IndexStyles.inactive,
+		logInModeButtonStyle: string = isSignUp ? IndexStyles.inactive : IndexStyles.active;
+
 	const onSubmitMainForm: FormEventHandler = async (event: FormEvent) => {
 		event.preventDefault();
 
@@ -42,8 +45,13 @@ const IndexPage = () => {
 	return (
 		<UserDialog title={pageTitle} errors={errors}>
 			<div className={IndexStyles.modeSwitcher}>
-				<button onClick={() => setSignUp(true)}>{t("indexpage:modes.signUp")}</button>
-				<button onClick={() => setSignUp(false)}>{t("indexpage:modes.logIn")}</button>
+				<button className={signUpModeButtonStyle} onClick={() => setSignUp(true)}>
+					{t("indexpage:modes.signUp")}
+				</button>
+
+				<button className={logInModeButtonStyle} onClick={() => setSignUp(false)}>
+					{t("indexpage:modes.logIn")}
+				</button>
 			</div>
 
 			<form onSubmit={onSubmitMainForm} className={IndexStyles.mainForm}>
