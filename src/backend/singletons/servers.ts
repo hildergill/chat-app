@@ -8,9 +8,9 @@ import { NextServer } from "next/dist/server/next";
 import CookieParser from "cookie-parser";
 import next from "next";
 import { Socket, Server as SocketServer } from "socket.io";
-import events from "../../events.json";
+import events from "../../../events.json";
 import { createMessage } from "../../helpers/messages";
-import {resolve} from "path";
+import { resolve } from "path";
 
 export type MiddlewareItem = {
 	path: string;
@@ -34,7 +34,7 @@ class Servers {
 
 		this.expressServer = express();
 		this.httpServer = createHttpServer(this.expressServer);
-		this.nextServer = next({ dev: NODE_ENV === "development",dir:resolve("frontend") });
+		this.nextServer = next({ dev: NODE_ENV === "development", dir: resolve("src", "frontend") });
 		this.socketServer = new SocketServer(this.httpServer);
 
 		this.socketServer.on("connection", (client: Socket) => {
