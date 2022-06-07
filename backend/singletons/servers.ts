@@ -10,6 +10,7 @@ import next from "next";
 import { Socket, Server as SocketServer } from "socket.io";
 import events from "../../events.json";
 import { createMessage } from "../../helpers/messages";
+import {resolve} from "path";
 
 export type MiddlewareItem = {
 	path: string;
@@ -33,7 +34,7 @@ class Servers {
 
 		this.expressServer = express();
 		this.httpServer = createHttpServer(this.expressServer);
-		this.nextServer = next({ dev: NODE_ENV === "development" });
+		this.nextServer = next({ dev: NODE_ENV === "development",dir:resolve("frontend") });
 		this.socketServer = new SocketServer(this.httpServer);
 
 		this.socketServer.on("connection", (client: Socket) => {
