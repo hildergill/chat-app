@@ -6,9 +6,9 @@ import { FormEvent, FormEventHandler, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetServerSideProps as PropsFunction, GetServerSidePropsContext as Context } from "next";
 import axios, { AxiosError } from "axios";
-import Error from "../models/error";
-import { getDisplayNameMaxLength, getPasswordMinLength } from "../validators/uservalidators";
-import { ErrorBox } from "../components/ErrorBox";
+import Error from "../../models/error";
+import { getDisplayNameMaxLength, getPasswordMinLength } from "../../validators/uservalidators";
+import { ErrorBox } from "../components/errorbox";
 import IndexPageStyle from "../stylesheets/pages/index.module.scss";
 import Head from "next/head";
 
