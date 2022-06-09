@@ -4,9 +4,8 @@
 import express from "express";
 import { Express, Request, Response, json, urlencoded } from "express";
 import { Server as HttpServer, createServer as createHttpServer } from "http";
-import { NextServer } from "next/dist/server/next";
+import next, { NextServer } from "next/dist/server/next";
 import CookieParser from "cookie-parser";
-import next from "next";
 import { Socket, Server as SocketServer } from "socket.io";
 import events from "../../events.json";
 import { createMessage } from "../helpers/messages";
