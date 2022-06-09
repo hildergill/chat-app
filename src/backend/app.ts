@@ -2,35 +2,36 @@
 // Copyright 2022 Hilder Gill
 
 import express from "express";
-import { Express, Request, Response, Handler, json, urlencoded } from "express";
+import { Express, Request, Response, json, urlencoded } from "express";
 import { Server as HttpServer, createServer as createHttpServer } from "http";
 import { NextServer } from "next/dist/server/next";
 import CookieParser from "cookie-parser";
 import next from "next";
 import { Socket, Server as SocketServer } from "socket.io";
-import events from "../../../events.json";
-import { createMessage } from "../../helpers/messages";
+import events from "../../events.json";
+import { createMessage } from "../helpers/messages";
 import { resolve } from "path";
+import UsersRoute from "./routes/usersroute";
+import MessagesRoute from "./routes/messagesroute";
+import { Connection, createConnection } from "mysql";
 
-export type MiddlewareItem = {
-	path: string;
-	handler: Handler;
-};
+class App {
+	private static instance: App;
 
-class Servers {
-	private static instance: Servers;
+	private databaseConnection: Connection;
 
 	private expressServer: Express;
 	private httpServer: HttpServer;
 	private nextServer: NextServer;
 	private socketServer: SocketServer;
 
-	private middlewares: MiddlewareItem[];
-
 	constructor() {
 		const { NODE_ENV } = process.env;
 
-		this.middlewares = [];
+		const { DATABASE_HOSTNAME: host, DATABASE_USERNAME: user, DATABASE_PASSWORD: password } = process.env,
+			database: string = "chat_app";
+
+		this.databaseConnection = createConnection({ host, user, password, database });
 
 		this.expressServer = express();
 		this.httpServer = createHttpServer(this.expressServer);
@@ -53,10 +54,6 @@ class Servers {
 		});
 	}
 
-	public addMiddleware(path: string, handler: Handler): void {
-		this.middlewares.push({ path, handler });
-	}
-
 	public startServer(): void {
 		const { BACKEND_PORT, BACKEND_SECRET } = process.env;
 
@@ -67,11 +64,8 @@ class Servers {
 			this.expressServer.use(json(), urlencoded({ extended: false }));
 			this.expressServer.use(CookieParser(BACKEND_SECRET));
 
-			this.middlewares.forEach(({ path, handler }: MiddlewareItem) => {
-				this.expressServer.use(path, handler);
-			});
-
-			// TODO Add something here later
+			this.expressServer.use("/api/users/", UsersRoute);
+			this.expressServer.use("/api/messages/", MessagesRoute);
 
 			this.expressServer.all("*", (request: Request, response: Response) => {
 				return requestHandler(request, response);
@@ -83,9 +77,13 @@ class Servers {
 		});
 	}
 
-	public static get Instance(): Servers {
-		return this.instance || (this.instance = new Servers());
+	public get DatabaseConnection(): Connection {
+		return this.databaseConnection;
+	}
+
+	public static get Instance(): App {
+		return this.instance || (this.instance = new App());
 	}
 }
 
-export default Servers.Instance;
+export default App.Instance;

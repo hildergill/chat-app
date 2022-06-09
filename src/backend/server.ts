@@ -2,12 +2,7 @@
 // Copyright 2022 Hilder Gill
 
 import { config } from "dotenv";
-import MessagesRoute from "./routes/messagesroute";
-import UsersRoute from "./routes/usersroute";
-import ServersSingleton from "./singletons/servers";
+import ServersSingleton from "./app";
 
 config();
-
-ServersSingleton.addMiddleware("/api/users/", UsersRoute);
-ServersSingleton.addMiddleware("/api/messages/", MessagesRoute);
 ServersSingleton.startServer();
