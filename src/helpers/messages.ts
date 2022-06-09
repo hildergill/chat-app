@@ -4,7 +4,7 @@
 import { v4 } from "uuid";
 import Message from "../models/message";
 import moment from "moment";
-import DatabaseConnectionSingleton from "../backend/singletons/databaseconnection";
+import App from "../backend/app";
 
 export const createMessage = (author: string, content: string): Promise<Message> =>
 	new Promise<Message>((resolve, reject) => {
@@ -13,7 +13,7 @@ export const createMessage = (author: string, content: string): Promise<Message>
 			queryString: string = "insert into messages values (?, ?, ?, ?)",
 			queryParams = [id, author, content, timestamp];
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, queryParams, (error) => {
+		App.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
 			return resolve({ id, author, displayName: null, content, timestamp });
 		});
@@ -26,7 +26,7 @@ export const fetchLatestMessages = (includeDisplayName: boolean = false): Promis
 			? "select messages.*, users.display_name from messages join users on users.id = messages.author order by timestamp desc"
 			: "select * from messages order by timestamp desc";
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, (error, results) => {
+		App.DatabaseConnection.query(queryString, (error, results) => {
 			if (error) return reject(error);
 			const sanitizedMessagesArray: Message[] = results.map((message: any) => ({
 				id: message["id"],

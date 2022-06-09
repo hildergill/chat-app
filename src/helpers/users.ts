@@ -4,7 +4,7 @@
 import { hash } from "bcrypt";
 import { v4 } from "uuid";
 import User from "../models/user";
-import DatabaseConnectionSingleton from "../backend/singletons/databaseconnection";
+import App from "../backend/app";
 
 export type CreateUserParams = {
 	displayName: string;
@@ -19,7 +19,7 @@ export const createUser = (params: CreateUserParams): Promise<User> =>
 			queryString: string = "insert users values (?, ?, ?)",
 			queryParams = [id, displayName, password];
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, queryParams, (error) => {
+		App.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
 			return resolve({ id, displayName, password });
 		});
@@ -29,7 +29,7 @@ export const fetchUsers = (): Promise<User[]> =>
 	new Promise<User[]>((resolve, reject) => {
 		const queryString: string = "select * from users order by display_name asc";
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, (error, results: any[]) => {
+		App.DatabaseConnection.query(queryString, (error, results: any[]) => {
 			if (error) return reject(error);
 
 			const fetchedUser: User[] = results.map((user) => ({
@@ -46,7 +46,7 @@ export const fetchUserByDisplayName = (displayName: String): Promise<User> =>
 	new Promise<User>((resolve, reject) => {
 		const queryString: string = "select * from users where display_name = ?";
 
-		DatabaseConnectionSingleton.DatabaseConnection.query(queryString, displayName, (error, results: any[]) => {
+		App.DatabaseConnection.query(queryString, displayName, (error, results: any[]) => {
 			if (error) return reject(error);
 			if (results.length !== 1) return reject(0);
 
