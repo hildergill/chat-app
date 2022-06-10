@@ -4,5 +4,5 @@
 		"connected": "USER_ACCOUNTS_CONNECTED",
 		"disconnected": "USER_ACCOUNTS_DISCONNECTED"
 	},
-	"message": "message"
+	"message": "MESSAGE"
 }
