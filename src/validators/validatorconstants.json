@@ -1,0 +1,6 @@
+{
+	"userInputs": {
+		"displayMaxName": 256,
+		"passwordMinLength": 8
+	}
+}

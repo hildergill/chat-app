@@ -7,14 +7,14 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetServerSideProps as PropsFunction, GetServerSidePropsContext as Context } from "next";
 import axios, { AxiosError } from "axios";
 import Error from "../../models/error";
-import { getDisplayNameMaxLength, getPasswordMinLength } from "../../validators/uservalidators";
+import ValidatorConstants from "../../validators/validatorconstants.json";
 import { ErrorBox } from "../components/errorbox";
 import IndexPageStyle from "../stylesheets/pages/index.module.scss";
 import Head from "next/head";
 
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
-	const [errors, setErrors] = useState<Error[]>(null);
+	const [errors, setErrors] = useState<Error[]>([]);
 
 	const { t } = useTranslation();
 
@@ -25,7 +25,7 @@ const IndexPage = () => {
 
 		try {
 			const requestUrl: string = isSignUp ? "/api/users/signup" : "/api/users/login",
-				dataObject = {
+				dataObject: any = {
 					displayName: displayName.value,
 					password: password.value
 				};
@@ -35,8 +35,8 @@ const IndexPage = () => {
 			await axios.post(requestUrl, dataObject);
 			location.assign("/chat/");
 		} catch (error) {
-			const { response }: AxiosError<Error[]> = error;
-			setErrors(response.data);
+			const { response }: AxiosError<Error[]> = error as AxiosError<Error[]>;
+			setErrors(response!.data);
 		}
 	};
 
@@ -70,23 +70,29 @@ const IndexPage = () => {
 						{isSignUp ? (
 							<>
 								<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>
-								<input type="text" name="displayName" id="displayName" required maxLength={getDisplayNameMaxLength()} />
+								<input type="text" name="displayName" id="displayName" required maxLength={ValidatorConstants.userInputs.displayMaxName} />
 
 								<label htmlFor="password">{t("indexpage:inputs.password")}</label>
-								<input type="password" name="password" id="password" required minLength={getPasswordMinLength()} />
+								<input type="password" name="password" id="password" required minLength={ValidatorConstants.userInputs.passwordMinLength} />
 
 								<label htmlFor="confirmPassword">{t("indexpage:inputs.confirmPassword")}</label>
-								<input type="password" name="confirmPassword" id="confirmPassword" required minLength={getPasswordMinLength()} />
+								<input
+									type="password"
+									name="confirmPassword"
+									id="confirmPassword"
+									required
+									minLength={ValidatorConstants.userInputs.passwordMinLength}
+								/>
 
 								<input type="submit" value={t("indexpage:modeTitles.signUp")} />
 							</>
 						) : (
 							<>
 								<label htmlFor="displayName">{t("indexpage:inputs.displayName")}</label>
-								<input type="text" name="displayName" id="displayName" required maxLength={getDisplayNameMaxLength()} />
+								<input type="text" name="displayName" id="displayName" required maxLength={ValidatorConstants.userInputs.displayMaxName} />
 
 								<label htmlFor="password">{t("indexpage:inputs.password")}</label>
-								<input type="password" name="password" id="password" required minLength={getPasswordMinLength()} />
+								<input type="password" name="password" id="password" required minLength={ValidatorConstants.userInputs.passwordMinLength} />
 
 								<input type="submit" value={t("indexpage:modeTitles.logIn")} />
 							</>
@@ -102,12 +108,10 @@ const IndexPage = () => {
 
 export default IndexPage;
 
-export const getServerSideProps: PropsFunction = async (context: Context) => {
-	const { locale }: Context = context;
-
+export const getServerSideProps: PropsFunction = async ({ locale }: Context) => {
 	return {
 		props: {
-			...(await serverSideTranslations(locale))
+			...(await serverSideTranslations(locale ?? "en"))
 		}
 	};
 };

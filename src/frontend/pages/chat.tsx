@@ -52,7 +52,7 @@ const ChatPage = (props: Props) => {
 	}, []);
 
 	useEffect(() => {
-		messageBoxList.current.scroll(0, messageBoxList.current.scrollHeight);
+		messageBoxList.current!.scroll(0, messageBoxList.current!.scrollHeight);
 	}, [messages]);
 
 	const onSubmitMessageForm: FormEventHandler = (event: FormEvent) => {
@@ -108,8 +108,9 @@ const ChatPage = (props: Props) => {
 
 type ServerSideProps = GetServerSideProps<Props>;
 
-export const getServerSideProps: ServerSideProps = async (context: Context) => {
-	const signedCookies = CookieParser.signedCookies(context.req.cookies, process.env.BACKEND_SECRET),
+export const getServerSideProps: ServerSideProps = async ({ req, locale }: Context) => {
+	const { BACKEND_SECRET } = process.env,
+		signedCookies = CookieParser.signedCookies(req.cookies, String(BACKEND_SECRET)),
 		userTokenString = signedCookies[getUserTokenCookieName()];
 
 	if (!userTokenString) return { redirect: { permanent: false, destination: "/" } };
@@ -127,7 +128,7 @@ export const getServerSideProps: ServerSideProps = async (context: Context) => {
 						userToken,
 						initialUsers: users ?? [],
 						initialMessages: initialMessages ?? [],
-						...(await serverSideTranslations(context.locale))
+						...(await serverSideTranslations(locale ?? "en"))
 					}
 			  }
 			: {
