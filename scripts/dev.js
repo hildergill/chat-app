@@ -2,10 +2,10 @@
 // Copyright 2022 Hilder Gill
 
 const nodemon = require("nodemon");
+const devconfig = require("./devconfig");
 
 nodemon({
-	ext: "ts",
-	exec: ["npm run build:backend", "npm start"].join(" && "),
+	...devconfig,
 	env: {
 		NODE_ENV: "development",
 
