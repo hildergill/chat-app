@@ -1,3 +1,7 @@
+# Version 1.1.2
+
+-   Updated dependencies
+
 # Version 1.1.1
 
 -   Merged the `DatabaseConnection` singleton and `Servers` singleton files to the `App` singleton class
