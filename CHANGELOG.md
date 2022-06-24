@@ -1,5 +1,6 @@
 # Version 1.1.2
 
+-   Added `dev:custom` script to [package.json](./package.json)
 -   Some code refractoring
 -   Updated dependencies
 
