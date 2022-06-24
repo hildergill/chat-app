@@ -38,14 +38,10 @@ class App {
 		this.socketServer = new SocketServer(this.httpServer);
 
 		this.socketServer.on("connection", (client: Socket) => {
-			console.debug(`Client connected: ${client.id}`);
-
 			client.on(events.message, async (author: string, content: string) => {
 				try {
 					await createMessage(author, content);
 					this.socketServer.emit(events.message);
-
-					console.debug(author, content);
 				} catch (error) {
 					console.error(error);
 				}
@@ -71,7 +67,7 @@ class App {
 			});
 
 			this.httpServer.listen(3000, () => {
-				console.debug(`Listening to port ${port}...`);
+				console.log(`Listening to port ${port}...`);
 			});
 		});
 	}

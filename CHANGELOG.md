@@ -1,5 +1,6 @@
 # Version 1.1.2
 
+-   Some code refractoring
 -   Updated dependencies
 
 # Version 1.1.1
