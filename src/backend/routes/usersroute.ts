@@ -13,19 +13,10 @@ import { createUserToken } from "../../helpers/usertokens";
 import { getCookieOptions, getUserTokenCookieName } from "../../helpers/cookies";
 import { compare } from "bcrypt";
 import Error from "../../models/error";
+import LogInBody from "../../models/users/loginbody";
+import SignUpBody from "../../models/users/signupbody";
 
 const validationOptions: ValidationOptions = { abortEarly: false };
-
-export type SignUpBody = {
-	displayName: string;
-	password: string;
-	confirmPassword: string;
-};
-
-export type LogInBody = {
-	displayName: string;
-	password: string;
-};
 
 const UsersRoute: Router = Router();
 export default UsersRoute;
