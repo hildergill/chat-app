@@ -29,5 +29,3 @@ create table `chat_app`.`messages` (
     primary key (`id`),
     foreign key (`author`) references `chat_app`.`users` (`id`)
 );
-
--- TODO Add something here later

@@ -14,6 +14,6 @@ nodemon({
 
 		DATABASE_HOSTNAME: "localhost",
 		DATABASE_USERNAME: "chat_app",
-		DATABASE_PASSWORD: "123456"
+		DATABASE_PASSWORD: "12345678"
 	}
 });
