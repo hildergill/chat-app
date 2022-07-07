@@ -48,7 +48,6 @@ export const fetchUserByDisplayName = (displayName: String): Promise<User> =>
 
 			try {
 				return resolve({
-					id: result["id"],
 					displayName: result["display_name"],
 					password: result["password"]
 				});
