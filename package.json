@@ -9,7 +9,7 @@
 	},
 	"repository": "https://www.github.com/hildergill/chat-app",
 	"main": "src/backend/server.js",
-	"version": "1.1.2",
+	"version": "1.2.0",
 	"license": "Apache-2.0",
 	"scripts": {
 		"build": "npm run build:backend && npm run build:frontend",
