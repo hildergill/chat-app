@@ -2,7 +2,6 @@
 // Copyright 2022 Hilder Gill
 
 type User = {
-	id: string;
 	displayName: string;
 	password: string;
 };

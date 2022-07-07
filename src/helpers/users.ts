@@ -2,7 +2,6 @@
 // Copyright 2022 Hilder Gill
 
 import { hash } from "bcrypt";
-import { v4 } from "uuid";
 import User from "../models/user";
 import App from "../backend/app";
 
