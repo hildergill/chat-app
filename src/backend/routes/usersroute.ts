@@ -1,6 +1,7 @@
 // This file is a part of chat-app (https://www.github.com/hildergill/chat-app)
 // Copyright 2022 Hilder Gill
 
+/*
 import { Router, Request, Response } from "express";
 import Joi, { ValidationOptions } from "joi";
 import { LogInValidator, SignUpValidator } from "../../validators/uservalidators";
@@ -66,3 +67,4 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 		}
 	}
 });
+*/

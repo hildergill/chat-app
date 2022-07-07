@@ -2,7 +2,6 @@
 // Copyright 2022 Hilder Gill
 
 import { Router, Request, Response } from "express";
-import Error from "../../models/error";
 import { fetchLatestMessages } from "../../helpers/messages";
 import Message from "../../models/messages/message";
 
@@ -11,12 +10,12 @@ export default MessagesRoute;
 
 MessagesRoute.get("/", async (request: Request, response: Response) => {
 	try {
-		const messages: Message[] = await fetchLatestMessages(true);
+		const messages: Message[] = await fetchLatestMessages();
 		return response.status(200).send(messages);
 	} catch (error) {
 		console.error(error);
 
-		const errors: Error[] = [{ errorKey: "errors:serverError" }];
+		const errors: string[] = ["errors:serverError"];
 		return response.status(500).json(errors);
 	}
 });
