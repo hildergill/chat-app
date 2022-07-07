@@ -6,16 +6,14 @@ import Message from "../models/message";
 import moment from "moment";
 import App from "../backend/app";
 
-export const createMessage = (author: string, content: string): Promise<Message> =>
-	new Promise<Message>((resolve, reject) => {
-		const id: string = v4(),
-			timestamp: number = moment.utc().valueOf(),
-			queryString: string = "insert into messages values (?, ?, ?, ?)",
-			queryParams = [id, author, content, timestamp];
+export const createMessage = (author: string, content: string): Promise<void> =>
+	new Promise<void>((resolve, reject) => {
+		const queryParams: string[] = [author, content],
+			queryString: string = "insert into messages (author, content) values (?, ?)";
 
 		App.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
-			return resolve({ id, author, displayName: null, content, timestamp });
+			return resolve();
 		});
 	});
 
