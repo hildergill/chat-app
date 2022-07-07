@@ -2,7 +2,7 @@
 // Copyright 2022 Hilder Gill
 
 import { hash } from "bcrypt";
-import User from "../models/user";
+import User from "../models/users/user";
 import App from "../backend/app";
 
 export const createUser = (displayName: string, unhashedPassword: string): Promise<void> =>

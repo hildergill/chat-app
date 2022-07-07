@@ -6,7 +6,7 @@ import Joi, { ValidationOptions } from "joi";
 import { LogInValidator, SignUpValidator } from "../../validators/uservalidators";
 import { convertValidationError } from "../../helpers/errors";
 import { MysqlError } from "mysql";
-import User from "../../models/user";
+import User from "../../models/users/user";
 import { createUser, fetchUserByDisplayName } from "../../helpers/users";
 import UserToken from "../../models/usertoken";
 import { createUserToken } from "../../helpers/usertokens";
