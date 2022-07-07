@@ -4,7 +4,7 @@
 import { Router, Request, Response } from "express";
 import Error from "../../models/error";
 import { fetchLatestMessages } from "../../helpers/messages";
-import Message from "../../models/message";
+import Message from "../../models/messages/message";
 
 const MessagesRoute: Router = Router();
 export default MessagesRoute;
