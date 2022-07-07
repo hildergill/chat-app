@@ -6,22 +6,17 @@ import { v4 } from "uuid";
 import User from "../models/user";
 import App from "../backend/app";
 
-export type CreateUserParams = {
-	displayName: string;
-	password: string;
-};
+export const createUser = (displayName: string, unhashedPassword: string): Promise<void> =>
+	new Promise<void>(async (resolve, reject) => {
+		const hashedPassword: string = await hash(unhashedPassword, 12),
+			queryParams: string[] = [displayName, hashedPassword],
+			queryString: string = "insert into users values (?, ?)";
 
-export const createUser = (params: CreateUserParams): Promise<User> =>
-	new Promise<User>(async (resolve, reject) => {
-		const id: string = v4(),
-			password: string = await hash(params.password, 12),
-			{ displayName } = params,
-			queryString: string = "insert users values (?, ?, ?)",
-			queryParams = [id, displayName, password];
-
-		App.DatabaseConnection.query(queryString, queryParams, (error) => {
+		App.DatabaseConnection.query(queryString, queryParams, (error, result) => {
 			if (error) return reject(error);
-			return resolve({ id, displayName, password });
+
+			console.debug(result);
+			return resolve();
 		});
 	});
 
