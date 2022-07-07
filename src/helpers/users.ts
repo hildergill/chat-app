@@ -24,16 +24,15 @@ export const fetchUsers = (): Promise<User[]> =>
 	new Promise<User[]>((resolve, reject) => {
 		const queryString: string = "select * from users order by display_name asc";
 
-		App.DatabaseConnection.query(queryString, (error, results: any[]) => {
+		App.DatabaseConnection.query(queryString, (error: any, results: any[]) => {
 			if (error) return reject(error);
 
-			const fetchedUser: User[] = results.map((user) => ({
-				id: user["id"],
-				displayName: user["display_name"],
-				password: user["password"]
-			}));
-
-			return resolve(fetchedUser);
+			return resolve(
+				results.map((user) => {
+					const { display_name: displayName, password } = user;
+					return { displayName, password };
+				})
+			);
 		});
 	});
 
