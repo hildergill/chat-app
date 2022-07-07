@@ -12,18 +12,18 @@ create table `chat_app`.`users` (
 
 create table `chat_app`.`user_tokens` (
     `token` varchar(512) not null,
-    `user` binary(16) not null,
+    `user` varchar(256) not null,
 
     primary key (`token`),
-    foreign key (`user`) references `chat_app`.`users` (`id`)
+    foreign key (`user`) references `chat_app`.`users` (`display_name`)
 );
 
 create table `chat_app`.`messages` (
     `id` binary(16) not null default (uuid_to_bin(uuid())),
-    `author` binary(16) not null,
+    `author` varchar(256) not null,
     `content` text not null,
     `timestamp` datetime not null default (utc_timestamp()),
 
     primary key (`id`),
-    foreign key (`author`) references `chat_app`.`users` (`id`)
+    foreign key (`author`) references `chat_app`.`users` (`display_name`)
 );
