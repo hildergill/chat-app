@@ -1,3 +1,8 @@
+# Version 1.2.0
+
+-   Changed some table attribute in [database/init.sql](./database/init.sql)
+-   Added [database/dev.sql](./database/dev.sql)
+
 # Version 1.1.2
 
 -   Added `dev:custom` script to [package.json](./package.json)
