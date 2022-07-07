@@ -1,9 +1,7 @@
 // This file is a part of chat-app (https://www.github.com/hildergill/chat-app)
 // Copyright 2022 Hilder Gill
 
-import { v4 } from "uuid";
 import Message from "../models/message";
-import moment from "moment";
 import App from "../backend/app";
 
 export const createMessage = (author: string, content: string): Promise<void> =>
@@ -17,23 +15,12 @@ export const createMessage = (author: string, content: string): Promise<void> =>
 		});
 	});
 
-// TODO Implement a better MySQL query that has a start index and limit
-export const fetchLatestMessages = (includeDisplayName: boolean = false): Promise<Message[]> =>
+export const fetchLatestMessages = (): Promise<Message[]> =>
 	new Promise<Message[]>(async (resolve, reject) => {
-		const queryString: string = includeDisplayName
-			? "select messages.*, users.display_name from messages join users on users.id = messages.author order by timestamp desc"
-			: "select * from messages order by timestamp desc";
+		const queryString: string = "select * from messages order by timestamp desc";
 
-		App.DatabaseConnection.query(queryString, (error, results) => {
+		App.DatabaseConnection.query(queryString, (error: any, results: any[]) => {
 			if (error) return reject(error);
-			const sanitizedMessagesArray: Message[] = results.map((message: any) => ({
-				id: message["id"],
-				author: message["author"],
-				displayName: message["display_name"] ?? null,
-				content: message["content"],
-				timestamp: message["timestamp"]
-			}));
-
-			return resolve(sanitizedMessagesArray);
+			return resolve(results.map((result) => ({ ...result })));
 		});
 	});
