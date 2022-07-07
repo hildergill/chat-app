@@ -4,12 +4,10 @@
 create database `chat_app`;
 
 create table `chat_app`.`users` (
-    `id` binary(16) not null default (uuid_to_bin(uuid())),
     `display_name` varchar(256) not null,
     `password` text not null,
 
-    primary key (`id`),
-    unique key (`display_name`)
+    primary key (`display_name`)
 );
 
 create table `chat_app`.`user_tokens` (
