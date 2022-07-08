@@ -5,12 +5,12 @@ import Message from "../../models/messages/message";
 import MessageBoxStyle from "../stylesheets/components/messagebox.module.scss";
 
 export const MessageBox = (props: Message) => {
-	const { displayName, timestamp, content } = props;
+	const { author, timestamp, content } = props;
 
 	return (
 		<li className={MessageBoxStyle.messageBox}>
 			<span className={MessageBoxStyle.infoSection}>
-				<strong>{displayName}</strong>
+				<strong>{author}</strong>
 				<code>{new Date(timestamp).toLocaleString()}</code>
 			</span>
 
