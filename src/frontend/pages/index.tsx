@@ -6,15 +6,13 @@ import { FormEvent, FormEventHandler, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetServerSideProps as PropsFunction, GetServerSidePropsContext as Context } from "next";
 import axios, { AxiosError } from "axios";
-import Error from "../../models/error";
 import ValidatorConstants from "../../validators/validatorconstants.json";
-import { ErrorBox } from "../components/errorbox";
 import IndexPageStyle from "../stylesheets/pages/index.module.scss";
 import Head from "next/head";
 
 const IndexPage = () => {
 	const [isSignUp, setSignUp] = useState<boolean>(true);
-	const [errors, setErrors] = useState<Error[]>([]);
+	const [errors, setErrors] = useState<string[]>([]);
 
 	const { t } = useTranslation();
 
@@ -35,14 +33,14 @@ const IndexPage = () => {
 			await axios.post(requestUrl, dataObject);
 			location.assign("/chat/");
 		} catch (error) {
-			const { response }: AxiosError<Error[]> = error as AxiosError<Error[]>;
+			const { response }: AxiosError<string[]> = error as AxiosError<string[]>;
 			setErrors(response!.data);
 		}
 	};
 
 	const getErrorBoxes = (): JSX.Element[] => {
-		return errors.map((error: Error, key: number) => {
-			return <ErrorBox key={key} {...error} />;
+		return errors.map((error: string, key: number) => {
+			return <p key={key}>{error}</p>;
 		});
 	};
 

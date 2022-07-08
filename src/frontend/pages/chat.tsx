@@ -10,13 +10,13 @@ import CookieParser from "cookie-parser";
 import { getUserTokenCookieName } from "../../helpers/cookies";
 import { verifyUserToken } from "../../helpers/usertokens";
 import axios, { AxiosResponse } from "axios";
-import Message from "../../models/message";
+import Message from "../../models/messages/message";
 import { fetchLatestMessages } from "../../helpers/messages";
 import { IconSend, IconTrash } from "@tabler/icons";
 import ChatPageStyles from "../stylesheets/pages/chat.module.scss";
 import { MessageBox } from "../components/messagebox";
 import { fetchUsers } from "../../helpers/users";
-import User from "../../models/user";
+import User from "../../models/users/user";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
@@ -119,7 +119,7 @@ export const getServerSideProps: ServerSideProps = async ({ req, locale }: Conte
 
 	try {
 		const isLoginValid: boolean = await verifyUserToken(userToken),
-			initialMessages: Message[] = await fetchLatestMessages(true),
+			initialMessages: Message[] = await fetchLatestMessages(),
 			users: string[] = (await fetchUsers()).map(({ displayName }: User) => displayName);
 
 		return isLoginValid
