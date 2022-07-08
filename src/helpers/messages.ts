@@ -15,16 +15,15 @@ export const createMessage = (author: string, content: string): Promise<void> =>
 		});
 	});
 
-export const fetchLatestMessages = (offset: number = 0, limit: number = 20): Promise<Message[]> =>
+export const fetchLatestMessages = (): Promise<Message[]> =>
 	new Promise<Message[]>(async (resolve, reject) => {
-		const queryParams: number[] = [limit, offset],
-			queryString: string = [
-				"select bin_to_uuid(id) as id, author, content,",
-				`date_format(timestamp, "%Y-%m-%dT%TZ") as timestamp`,
-				"from messages limit ? offset ?"
-			].join(" ");
+		const queryString: string = [
+			"select bin_to_uuid(id) as id, author, content,",
+			`date_format(timestamp, "%Y-%m-%dT%TZ") as timestamp from messages`,
+			"order by timestamp desc"
+		].join(" ");
 
-		App.DatabaseConnection.query(queryString, queryParams, (error: any, results: any[]) => {
+		App.DatabaseConnection.query(queryString, (error: any, results: any[]) => {
 			if (error) return reject(error);
 			return resolve(results.map((result) => ({ ...result })));
 		});

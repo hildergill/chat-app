@@ -15,7 +15,7 @@ MessagesRoute.get("/", async (req: Request, res: Response) => {
 	if (error) return res.status(400).json(convertValidationError(error.details)).end();
 
 	try {
-		const messages: Message[] = await fetchLatestMessages(value.page * 10, 10);
+		const messages: Message[] = await fetchLatestMessages();
 		return res.status(200).send(messages);
 	} catch (error) {
 		console.error(error);
