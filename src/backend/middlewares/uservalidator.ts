@@ -5,11 +5,8 @@ import { verifyUserToken } from "../../helpers/usertokens";
 import UserToken from "../../models/usertoken";
 
 const UserValidator = async (req: Request, res: Response, next: NextFunction) => {
-	const userTokenString = req.signedCookies[getUserTokenCookieName()];
-	if (!userTokenString) return res.status(401).json(["errors:accessDenied"]);
-
-	const userToken = JSONCookie(userTokenString);
-	if (userToken === undefined) return res.status(401).json(["errors:accessDenied"]);
+	const userToken = req.signedCookies[getUserTokenCookieName()];
+	if (!userToken) return res.status(401).json(["errors:accessDenied"]);
 
 	const isLogInValid: boolean = await verifyUserToken(userToken as UserToken);
 	if (!isLogInValid) return res.status(401).json(["errors:accessDenied"]);
