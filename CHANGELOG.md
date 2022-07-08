@@ -3,6 +3,9 @@
 -   Changed some table attribute in [database/init.sql](./database/init.sql)
 -   Added [database/dev.sql](./database/dev.sql)
 -   Overhauled helper functions
+-   Some minor fixes to the frontend files
+-   Removed the `Error` data model in favour of string array
+-   Removed the `ErrorBox` component
 
 # Version 1.1.2
 
