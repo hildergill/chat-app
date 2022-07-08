@@ -3,7 +3,7 @@
 
 import { CookieOptions } from "express";
 
-export const getUserTokenCookieName = (): string => "USER_TOKEN";
+export const getUserTokenCookieName = (): string => "UserToken";
 
 export const getCookieOptions = (): CookieOptions => {
 	const { NODE_ENV } = process.env;
