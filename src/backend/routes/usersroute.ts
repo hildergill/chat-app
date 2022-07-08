@@ -5,15 +5,28 @@ import { compare } from "bcrypt";
 import { Router, Request, Response } from "express";
 import { getUserTokenCookieName, getCookieOptions } from "../../helpers/cookies";
 import { convertValidationError } from "../../helpers/errors";
-import { createUser, fetchUserByDisplayName } from "../../helpers/users";
+import { createUser, fetchUserByDisplayName, fetchUsers } from "../../helpers/users";
 import { createUserToken } from "../../helpers/usertokens";
 import User from "../../models/users/user";
 import UserToken from "../../models/usertoken";
 import { LogInBodyValidationResult, validateLogInBody } from "../../validators/users/loginbody";
 import { SignUpBodyValidationResult, validateSignUpBody } from "../../validators/users/signupbody";
+import UserValidator from "../middlewares/uservalidator";
 
 const UsersRoute: Router = Router();
 export default UsersRoute;
+
+UsersRoute.get("/", UserValidator, async (req: Request, res: Response) => {
+	try {
+		const fetchedUsers = await fetchUsers();
+		return res.status(200).json(fetchedUsers).end();
+	} catch (error) {
+		console.error(error);
+
+		const errors: string[] = ["errors:serverError"];
+		return res.status(500).json(errors);
+	}
+});
 
 UsersRoute.post("/signup/", async (req: Request, res: Response) => {
 	const { value, error }: SignUpBodyValidationResult = validateSignUpBody(req.body);
