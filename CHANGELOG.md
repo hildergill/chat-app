@@ -2,6 +2,7 @@
 
 -   Changed some table attribute in [database/init.sql](./database/init.sql)
 -   Added [database/dev.sql](./database/dev.sql)
+-   Overhauled helper functions
 
 # Version 1.1.2
 
