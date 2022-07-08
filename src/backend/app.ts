@@ -77,6 +77,10 @@ class App {
 		return this.databaseConnection;
 	}
 
+	public sendUserRegisteredEvent(): void {
+		this.socketServer.emit(events.userAccount.registered);
+	}
+
 	public static get Instance(): App {
 		return this.instance || (this.instance = new App());
 	}

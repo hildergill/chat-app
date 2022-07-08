@@ -49,6 +49,16 @@ const ChatPage = (props: Props) => {
 				console.error(error);
 			}
 		});
+
+		socketClient.on(events.userAccount.registered, async () => {
+			try {
+				const { data }: AxiosResponse<string[]> = await axios.get("/api/users/");
+				setUsers(data);
+			} catch (error) {
+				// TODO Add error handling here later
+				console.error(error);
+			}
+		});
 	}, []);
 
 	useEffect(() => {

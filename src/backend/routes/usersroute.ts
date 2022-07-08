@@ -11,6 +11,7 @@ import User from "../../models/users/user";
 import UserToken from "../../models/usertoken";
 import { LogInBodyValidationResult, validateLogInBody } from "../../validators/users/loginbody";
 import { SignUpBodyValidationResult, validateSignUpBody } from "../../validators/users/signupbody";
+import app from "../app";
 import UserValidator from "../middlewares/uservalidator";
 
 const UsersRoute: Router = Router();
@@ -18,8 +19,10 @@ export default UsersRoute;
 
 UsersRoute.get("/", UserValidator, async (req: Request, res: Response) => {
 	try {
-		const fetchedUsers = await fetchUsers();
-		return res.status(200).json(fetchedUsers).end();
+		const fetchedUsers: User[] = await fetchUsers(),
+			tempUserDisplayNames: string[] = fetchedUsers.map((user: User) => user.displayName);
+
+		return res.status(200).json(tempUserDisplayNames).end();
 	} catch (error) {
 		console.error(error);
 
@@ -36,6 +39,8 @@ UsersRoute.post("/signup/", async (req: Request, res: Response) => {
 		await createUser(value.displayName, value.password);
 
 		const userToken: UserToken = await createUserToken(value.displayName);
+
+		app.sendUserRegisteredEvent();
 		return res.status(201).cookie(getUserTokenCookieName(), userToken, getCookieOptions()).end();
 	} catch (error) {
 		console.error(error);
