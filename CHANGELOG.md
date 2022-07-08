@@ -6,6 +6,7 @@
 -   Some minor fixes to the frontend files
 -   Removed the `Error` data model in favour of string array
 -   Removed the `ErrorBox` component
+-   Added the real-time user registration event
 
 # Version 1.1.2
 
