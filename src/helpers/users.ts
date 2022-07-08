@@ -11,10 +11,8 @@ export const createUser = (displayName: string, unhashedPassword: string): Promi
 			queryParams: string[] = [displayName, hashedPassword],
 			queryString: string = "insert into users values (?, ?)";
 
-		App.DatabaseConnection.query(queryString, queryParams, (error, result) => {
+		App.DatabaseConnection.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
-
-			console.debug(result);
 			return resolve();
 		});
 	});
