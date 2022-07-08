@@ -1,8 +1,16 @@
 // This file is a part of chat-app (https://www.github.com/hildergill/chat-app)
 // Copyright 2022 Hilder Gill
 
+import { Router, Request, Response, NextFunction } from "express";
+import { getUserTokenCookieName, getCookieOptions } from "../../helpers/cookies";
+import { convertValidationError } from "../../helpers/errors";
+import { createUser } from "../../helpers/users";
+import { createUserToken } from "../../helpers/usertokens";
+import SignUpBody from "../../models/users/signupbody";
+import UserToken from "../../models/usertoken";
+import { SignUpBodyValidationResult, validateSignUpBody } from "../../validators/users/signupbody";
+
 /*
-import { Router, Request, Response } from "express";
 import Joi, { ValidationOptions } from "joi";
 import { LogInValidator, SignUpValidator } from "../../validators/uservalidators";
 import { convertValidationError } from "../../helpers/errors";
@@ -16,12 +24,12 @@ import { compare } from "bcrypt";
 import Error from "../../models/error";
 import LogInBody from "../../models/users/loginbody";
 import SignUpBody from "../../models/users/signupbody";
-
-const validationOptions: ValidationOptions = { abortEarly: false };
+*/
 
 const UsersRoute: Router = Router();
 export default UsersRoute;
 
+/*
 UsersRoute.post("/signup/", async (request: Request, response: Response) => {
 	const { value, error }: Joi.ValidationResult<SignUpBody> = SignUpValidator.validate(request.body, validationOptions);
 	if (error) return response.status(400).json(convertValidationError(error));
@@ -68,3 +76,18 @@ UsersRoute.post("/login/", async (request: Request, response: Response) => {
 	}
 });
 */
+
+UsersRoute.post("/signup/", async (req: Request, res: Response) => {
+	const { value, error }: SignUpBodyValidationResult = validateSignUpBody(req.body);
+	if (error) return res.status(400).json(convertValidationError(error.details)).end();
+
+	try {
+		await createUser(value.displayName, value.password);
+
+		const userToken: UserToken = await createUserToken(value.displayName);
+		return res.status(201).cookie(getUserTokenCookieName(), userToken, getCookieOptions()).end();
+	} catch (error) {
+		console.error(error);
+		return res.status(500).end();
+	}
+});

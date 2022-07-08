@@ -9,7 +9,7 @@ const UserValidator = async (req: Request, res: Response, next: NextFunction) =>
 	if (!userTokenString) return res.status(401).json(["errors:accessDenied"]);
 
 	const userToken = JSONCookie(userTokenString);
-	if (!userToken) return res.status(401).json(["errors:accessDenied"]);
+	if (userToken === undefined) return res.status(401).json(["errors:accessDenied"]);
 
 	const isLogInValid: boolean = await verifyUserToken(userToken as UserToken);
 	if (!isLogInValid) return res.status(401).json(["errors:accessDenied"]);

@@ -10,10 +10,10 @@ import { Socket, Server as SocketServer } from "socket.io";
 import events from "../../events.json";
 import { createMessage } from "../helpers/messages";
 import { resolve } from "path";
-/* import UsersRoute from "./routes/usersroute"; */
 import MessagesRoute from "./routes/messagesroute";
 import { Connection, createConnection } from "mysql";
 import UserValidator from "./middlewares/uservalidator";
+import UsersRoute from "./routes/usersroute";
 
 class App {
 	private static instance: App;
@@ -60,7 +60,7 @@ class App {
 			this.expressServer.use(json(), urlencoded({ extended: false }));
 			this.expressServer.use(CookieParser(BACKEND_SECRET));
 
-			/* this.expressServer.use("/api/users/", UsersRoute); */
+			this.expressServer.use("/api/users/", UsersRoute);
 			this.expressServer.use("/api/messages/", UserValidator, MessagesRoute);
 
 			this.expressServer.all("*", (request: Request, response: Response) => {
