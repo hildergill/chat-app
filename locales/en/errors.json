@@ -1,5 +1,6 @@
 {
 	"accessDenied": "Access denied",
+	"invalidPassword": "Invalid password",
 	"serverError": "Internal server error",
 	"inputs": {
 		"displayName": {
