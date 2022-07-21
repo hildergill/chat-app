@@ -1,0 +1,24 @@
+// This file is a part of chat-app (https://www.github.com/hildergill/chat-app)
+// Copyright 2022 Hilder Gill
+
+import { Socket, Server as SocketServer } from "socket.io";
+import { Server as HttpServer } from "http";
+import Events from "../../events.json";
+import { createMessage } from "../helpers/messages";
+
+let socketServer: SocketServer;
+
+export const initializeSocketServer = (httpServer: HttpServer) => {
+	socketServer = new SocketServer(httpServer);
+};
+
+export const socketConnectionHandler = (client: Socket) => {
+	client.on(Events.message, async (author: string, content: string) => {
+		try {
+			await createMessage(author, content);
+			socketServer.emit(Events.message);
+		} catch (error) {
+			console.error(error);
+		}
+	});
+};
