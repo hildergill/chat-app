@@ -5,6 +5,8 @@ import { Socket, Server as SocketServer } from "socket.io";
 import { Server as HttpServer } from "http";
 import Events from "../../events.json";
 import { createMessage } from "../helpers/messages";
+import { Connection } from "mysql";
+import { createDatabaseConnection } from "../helpers/database";
 
 let socketServer: SocketServer;
 
@@ -19,11 +21,15 @@ export const initializeSocketServer = (httpServer: HttpServer) => {
 		console.log(`Client ${client.id} connected!`);
 
 		client.on(Events.message, async (author: string, content: string) => {
+			const databaseConnection: Connection = createDatabaseConnection();
+
 			try {
-				await createMessage(author, content);
+				await createMessage(databaseConnection, author, content);
 				socketServer.emit(Events.message);
 			} catch (error) {
 				console.error(error);
+			} finally {
+				databaseConnection.end();
 			}
 		});
 	});
