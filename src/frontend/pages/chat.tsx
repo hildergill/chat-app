@@ -20,6 +20,8 @@ import User from "../../models/users/user";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
+import { Connection } from "mysql";
+import { createDatabaseConnection } from "../../helpers/database";
 
 type Props = {
 	userToken: UserToken;
@@ -119,18 +121,20 @@ const ChatPage = (props: Props) => {
 type ServerSideProps = GetServerSideProps<Props>;
 
 export const getServerSideProps: ServerSideProps = async ({ req, locale }: Context) => {
-	const { BACKEND_SECRET } = process.env,
-		signedCookies = CookieParser.signedCookies(req.cookies, String(BACKEND_SECRET)),
-		userTokenString = signedCookies[getUserTokenCookieName()];
+	const { BACKEND_SECRET } = process.env;
+
+	const userTokenString = CookieParser.signedCookie(req.cookies[getUserTokenCookieName()]!, String(BACKEND_SECRET));
 
 	if (!userTokenString) return { redirect: { permanent: false, destination: "/" } };
 
 	const userToken: UserToken = CookieParser.JSONCookie(userTokenString) as UserToken;
 
+	const databaseConnection: Connection = createDatabaseConnection();
+
 	try {
-		const isLoginValid: boolean = await verifyUserToken(userToken),
-			initialMessages: Message[] = await fetchLatestMessages(),
-			users: string[] = (await fetchUsers()).map(({ displayName }: User) => displayName);
+		const isLoginValid: boolean = await verifyUserToken(databaseConnection, userToken),
+			initialMessages: Message[] = await fetchLatestMessages(databaseConnection),
+			users: string[] = (await fetchUsers(databaseConnection)).map(({ displayName }: User) => displayName);
 
 		return isLoginValid
 			? {
