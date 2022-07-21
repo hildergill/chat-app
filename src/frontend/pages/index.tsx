@@ -40,7 +40,7 @@ const IndexPage = () => {
 
 	const getErrorBoxes = (): JSX.Element[] => {
 		return errors.map((error: string, key: number) => {
-			return <p key={key}>{t(error)}</p>;
+			return <li key={key}>{t(error)}</li>;
 		});
 	};
 
@@ -97,7 +97,7 @@ const IndexPage = () => {
 						)}
 					</form>
 
-					{errors && getErrorBoxes()}
+					{errors && <ul className={IndexPageStyle.errorList}>{getErrorBoxes()}</ul>}
 				</main>
 			</div>
 		</>
