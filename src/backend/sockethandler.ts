@@ -10,15 +10,15 @@ let socketServer: SocketServer;
 
 export const initializeSocketServer = (httpServer: HttpServer) => {
 	socketServer = new SocketServer(httpServer);
-};
 
-export const socketConnectionHandler = (client: Socket) => {
-	client.on(Events.message, async (author: string, content: string) => {
-		try {
-			await createMessage(author, content);
-			socketServer.emit(Events.message);
-		} catch (error) {
-			console.error(error);
-		}
+	socketServer.on("connection", (client: Socket) => {
+		client.on(Events.message, async (author: string, content: string) => {
+			try {
+				await createMessage(author, content);
+				socketServer.emit(Events.message);
+			} catch (error) {
+				console.error(error);
+			}
+		});
 	});
 };
