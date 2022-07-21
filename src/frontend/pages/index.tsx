@@ -40,7 +40,7 @@ const IndexPage = () => {
 
 	const getErrorBoxes = (): JSX.Element[] => {
 		return errors.map((error: string, key: number) => {
-			return <p key={key}>{error}</p>;
+			return <p key={key}>{t(error)}</p>;
 		});
 	};
 

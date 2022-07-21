@@ -70,7 +70,7 @@ UsersRoute.post("/login/", async (req: Request, res: Response) => {
 		const fetchedUser: User = await fetchUserByDisplayName(databaseConnection, value.displayName);
 
 		if (!(await compare(value.password, fetchedUser.password))) {
-			return res.status(400).json(["error:invalidPassword"]).end();
+			return res.status(400).json(["errors:invalidPassword"]).end();
 		}
 
 		const userToken: UserToken = await createUserToken(databaseConnection, fetchedUser.displayName);
