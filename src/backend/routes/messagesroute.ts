@@ -2,6 +2,8 @@
 // Copyright 2022 Hilder Gill
 
 import { Router, Request, Response } from "express";
+import { Connection } from "mysql";
+import { createDatabaseConnection } from "../../helpers/database";
 import { convertValidationError } from "../../helpers/errors";
 import { fetchLatestMessages } from "../../helpers/messages";
 import Message from "../../models/messages/message";
@@ -14,8 +16,10 @@ MessagesRoute.get("/", async (req: Request, res: Response) => {
 	const { value, error }: FetchMessagesQueryValidationResult = validateFetchMessagesQuery(req.body);
 	if (error) return res.status(400).json(convertValidationError(error.details)).end();
 
+	const databaseConnection: Connection = createDatabaseConnection();
+
 	try {
-		const messages: Message[] = await fetchLatestMessages();
+		const messages: Message[] = await fetchLatestMessages(databaseConnection);
 		return res.status(200).send(messages);
 	} catch (error) {
 		console.error(error);

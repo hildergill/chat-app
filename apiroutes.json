@@ -1,0 +1,4 @@
+{
+	"users": "/api/users/",
+	"messages": "/api/messages/"
+}

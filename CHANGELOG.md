@@ -1,7 +1,5 @@
 # Version 1.2.1
 
-
-
 # Version 1.2.0
 
 -   Changed some table attribute in [database/init.sql](./database/init.sql)

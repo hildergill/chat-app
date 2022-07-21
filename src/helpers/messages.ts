@@ -2,20 +2,20 @@
 // Copyright 2022 Hilder Gill
 
 import Message from "../models/messages/message";
-import App from "../backend/app";
+import { Connection } from "mysql";
 
-export const createMessage = (author: string, content: string): Promise<void> =>
+export const createMessage = (database: Connection, author: string, content: string): Promise<void> =>
 	new Promise<void>((resolve, reject) => {
 		const queryParams: string[] = [author, content],
 			queryString: string = "insert into messages (author, content) values (?, ?)";
 
-		App.DatabaseConnection.query(queryString, queryParams, (error) => {
+		database.query(queryString, queryParams, (error) => {
 			if (error) return reject(error);
 			return resolve();
 		});
 	});
 
-export const fetchLatestMessages = (): Promise<Message[]> =>
+export const fetchLatestMessages = (database: Connection): Promise<Message[]> =>
 	new Promise<Message[]>(async (resolve, reject) => {
 		const queryString: string = [
 			"select bin_to_uuid(id) as id, author, content,",
@@ -23,7 +23,7 @@ export const fetchLatestMessages = (): Promise<Message[]> =>
 			"order by timestamp desc"
 		].join(" ");
 
-		App.DatabaseConnection.query(queryString, (error: any, results: any[]) => {
+		database.query(queryString, (error: any, results: any[]) => {
 			if (error) return reject(error);
 			return resolve(results.map((result) => ({ ...result })));
 		});
