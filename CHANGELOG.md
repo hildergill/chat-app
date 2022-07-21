@@ -1,10 +1,11 @@
 # Version 1.2.1
 
--   Fixed the _not a valid left-hand assignment_ build error in [src/frontend/pages/chat.tsx](./src/frontend/pages/chat.tsx)
+-   Fixed the _"not a valid left-hand assignment"_ build error in [src/frontend/pages/chat.tsx](./src/frontend/pages/chat.tsx)
 -   Fixed the incompatible cookie dictionary type in [src/frontend/pages/chat.tsx](./src/frontend/pages/chat.tsx)
 -   Removed the use and all references to [src/backend/app.ts](./src/backend/app.ts)
 -   Fixed error list in [src/frontend/pages/index.tsx](./src/frontend/pages/index.tsx) to display correctly
 -   Converted error list in [src/frontend/pages/index.tsx](./src/frontend/pages/index.tsx) to into unordered list
+-   Changed the filepath structure in [README.md](./README.md)
 
 # Version 1.2.0
 
