@@ -1,5 +1,9 @@
 # Version 1.2.1
 
+-   Fixed the _not a valid left-hand assignment_ build error in [src/frontend/pages/chat.tsx](src/frontend/pages/chat.tsx)
+-   Fixed the incompatible cookie dictionary type in [src/frontend/pages/chat.tsx](src/frontend/pages/chat.tsx)
+-   Removed the use and all references to [src/backend/app.ts](src/backend/app.ts)
+
 # Version 1.2.0
 
 -   Changed some table attribute in [database/init.sql](./database/init.sql)
