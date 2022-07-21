@@ -11,8 +11,8 @@ import User from "../../models/users/user";
 import UserToken from "../../models/usertoken";
 import { LogInBodyValidationResult, validateLogInBody } from "../../validators/users/loginbody";
 import { SignUpBodyValidationResult, validateSignUpBody } from "../../validators/users/signupbody";
-import app from "../app";
 import UserValidator from "../middlewares/uservalidator";
+import { sendUserRegisteredEvent } from "../sockethandler";
 
 const UsersRoute: Router = Router();
 export default UsersRoute;
@@ -40,7 +40,7 @@ UsersRoute.post("/signup/", async (req: Request, res: Response) => {
 
 		const userToken: UserToken = await createUserToken(value.displayName);
 
-		app.sendUserRegisteredEvent();
+		sendUserRegisteredEvent();
 		return res.status(201).cookie(getUserTokenCookieName(), userToken, getCookieOptions()).end();
 	} catch (error) {
 		console.error(error);

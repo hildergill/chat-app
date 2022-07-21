@@ -8,10 +8,16 @@ import { createMessage } from "../helpers/messages";
 
 let socketServer: SocketServer;
 
+export const sendUserRegisteredEvent = () => {
+	socketServer.emit(Events.userAccount.registered);
+};
+
 export const initializeSocketServer = (httpServer: HttpServer) => {
 	socketServer = new SocketServer(httpServer);
 
 	socketServer.on("connection", (client: Socket) => {
+		console.log(`Client ${client.id} connected!`);
+
 		client.on(Events.message, async (author: string, content: string) => {
 			try {
 				await createMessage(author, content);
