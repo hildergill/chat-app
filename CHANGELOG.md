@@ -1,3 +1,7 @@
+# Version 1.2.2
+
+-   Updated dependencies
+
 # Version 1.2.1
 
 -   Fixed the _"not a valid left-hand assignment"_ build error in [src/frontend/pages/chat.tsx](./src/frontend/pages/chat.tsx)
